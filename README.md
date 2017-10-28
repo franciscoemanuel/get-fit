@@ -1,2 +1,2 @@
 # GET FIT
-Projeto para disciplina de programação avançada para internet (PAVI), utilizando JSF, PRIMEFACES e HIBERN
+Projeto para disciplina de programação avançada para internet (PAVI), utilizando JSF, PRIMEFACES e HIBATE
