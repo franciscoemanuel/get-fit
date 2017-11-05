@@ -2,6 +2,47 @@
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="/template.xhtml">
-    <h1>Cadastre-se</h1>
+             template="/template.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:form>
+        <p:panel id="grid" class="ui-lg-8 ui-md-12 centered" header="Cadastro">
+            <p:messages id="messages" autoUpdate="true" for="messages"/>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="nome" value="Nome completo"/>
+                <p:inputText size="100" id="nome" required="true" placeholder="Fulano da Silva" value="#{cadastroUsuariosMB.usuario.nome}"/>
+
+                <p:outputLabel for="email" value="Email" />
+                <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.usuario.email}"/>
+
+                <p:outputLabel for="senha" value="Senha" />
+                <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.usuario.senha}"/>
+
+                <p:outputLabel for="senhaConfirmacao" value="Redigite a senha" />
+                <p:password id="senhaConfirmacao" required="true"/>
+
+            </h:panelGrid>
+            <div align="right" style="margin-top: 10px">
+                <p:commandButton value="Cadastrar" action="${cadastroUsuariosMB.cadastrarUsuario()}" update="grid" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </div>
+        </p:panel>
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage library="images" name="rolling.gif" />
+            <h:outputText>Carregando...</h:outputText>
+        </p:dialog>
+
+        <p:ajaxExceptionHandler type="java.sql.SQLException"
+                                onexception="PF('messages').show();" />
+    </h:form>
+    <style>
+        input {
+            width: 100%
+        }
+        .centered {
+            margin-top: 2em;
+            margin-right: auto;
+            margin-left: auto;
+        }
+    </style>
 </ui:decorate>

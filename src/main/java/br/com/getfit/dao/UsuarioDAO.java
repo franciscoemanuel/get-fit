@@ -32,4 +32,14 @@ public class UsuarioDAO {
         return usuarios;
     }
     
+    public static void main(String[] args) {
+        Usuario usuario = new Usuario();
+        usuario.setId(1);
+        usuario.setNome("Francisco Emanuel");
+        usuario.setEmail("francisco.emanuel@hotmail.com.br");
+        usuario.setSenha("123456");
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        usuarioDAO.salvar(usuario);
+    }
+    
 }

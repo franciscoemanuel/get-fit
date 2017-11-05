@@ -5,6 +5,7 @@
  */
 package br.com.getfit.utils;
 
+import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
 
@@ -32,5 +33,9 @@ public class HibernateUtil {
     
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+    
+    public static void main(String[] args) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
     }
 }
