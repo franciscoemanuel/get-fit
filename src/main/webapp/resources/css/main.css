@@ -1,0 +1,8 @@
+input {
+    width: 100%
+}
+.centered {
+    margin-top: 3em;
+    margin-right: auto;
+    margin-left: auto;
+}

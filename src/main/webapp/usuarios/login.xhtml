@@ -2,6 +2,33 @@
 <ui:decorate xmlns="http://www.w3.org/1999/xhtml"
              xmlns:h="http://xmlns.jcp.org/jsf/html"
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="/template.xhtml">
-    <h1>Login</h1>
+             template="/template.xhtml"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:form>
+        <p:panel id="panel" class="ui-lg-8 ui-md-12 centered" header="Login">
+            <p:messages id="messages" autoUpdate="true" for="messages"/>
+
+            <f:facet name="header">
+                <label>Login</label>
+                <a href="/cadastro" style="float: right">Não possuo uma conta</a>
+            </f:facet>
+            
+            <p:focus context="panel"/>
+
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="email" value="Email" />
+                <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value=""/>
+
+                <p:outputLabel for="senha" value="Senha" />
+                <p:password id="senha" required="true" value=""/>
+            </h:panelGrid>
+
+            <div align="right" style="margin-top: 10px">
+                <p:commandButton value="Entrar" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+            </div>
+
+            <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
+        </p:panel>
+    </h:form>
 </ui:decorate>

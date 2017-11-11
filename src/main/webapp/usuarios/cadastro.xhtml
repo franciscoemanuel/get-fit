@@ -4,10 +4,18 @@
              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
              template="/template.xhtml"
              xmlns:p="http://primefaces.org/ui"
-             xmlns:pe="http://primefaces.org/ui/extensions">
+             xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:form>
-        <p:panel id="grid" class="ui-lg-8 ui-md-12 centered" header="Cadastro">
+        <p:panel id="panel" class="ui-lg-8 ui-md-12 centered" header="Cadastro">
             <p:messages id="messages" autoUpdate="true" for="messages"/>
+
+            <f:facet name="header">
+                <label>Cadastro</label>
+                <a href="/login" style="float: right">Já tenho uma conta</a>
+            </f:facet>
+            
+            <p:focus context="panel"/>
+            
             <h:panelGrid columns="2" cellpadding="5">
                 <h:outputLabel for="nome" value="Nome completo"/>
                 <p:inputText size="100" id="nome" required="true" placeholder="Fulano da Silva" value="#{cadastroUsuariosMB.usuario.nome}"/>
@@ -23,26 +31,10 @@
 
             </h:panelGrid>
             <div align="right" style="margin-top: 10px">
-                <p:commandButton value="Cadastrar" action="${cadastroUsuariosMB.cadastrarUsuario()}" update="grid" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+                <p:commandButton value="Cadastrar" action="${cadastroUsuariosMB.cadastrarUsuario()}" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
             </div>
         </p:panel>
 
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-            <p:graphicImage library="images" name="rolling.gif" />
-            <h:outputText>Carregando...</h:outputText>
-        </p:dialog>
-
-        <p:ajaxExceptionHandler type="java.sql.SQLException"
-                                onexception="PF('messages').show();" />
+        <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
     </h:form>
-    <style>
-        input {
-            width: 100%
-        }
-        .centered {
-            margin-top: 2em;
-            margin-right: auto;
-            margin-left: auto;
-        }
-    </style>
 </ui:decorate>

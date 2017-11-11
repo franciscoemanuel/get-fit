@@ -2,15 +2,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>GET-FIT</title>
+        <link rel="stylesheet" href="resources/css/main.css" />
     </h:head>
     <h:body>
         <!--Top bar-->
         <ui:include src="partials/topbar.xhtml"></ui:include>
         <!--Conteúdo-->
         <ui:insert></ui:insert>
+        <!-- Modal de carregamento -->
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <p:graphicImage library="images" name="rolling.gif" />
+            <h:outputText>Carregando...</h:outputText>
+        </p:dialog>
     </h:body>
 </html>
 
