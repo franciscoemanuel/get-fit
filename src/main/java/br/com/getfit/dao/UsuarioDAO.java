@@ -5,8 +5,8 @@
  */
 package br.com.getfit.dao;
 
-import br.com.getfit.models.Usuario;
-import br.com.getfit.utils.HibernateUtil;
+import br.com.getfit.model.Usuario;
+import br.com.getfit.util.HibernateUtil;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -14,7 +14,7 @@ import org.hibernate.Session;
  *
  * @author Francisco
  */
-public class UsuarioDAO {
+public class UsuarioDAO extends DAOBase<Usuario>{
     
     public void salvar(Usuario usuario) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
@@ -32,14 +32,12 @@ public class UsuarioDAO {
         return usuarios;
     }
     
-    public static void main(String[] args) {
-        Usuario usuario = new Usuario();
-        usuario.setId(1);
-        usuario.setNome("Francisco Emanuel");
-        usuario.setEmail("francisco.emanuel@hotmail.com.br");
-        usuario.setSenha("123456");
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        usuarioDAO.salvar(usuario);
+    public Usuario findByLogin(String login){
+        return createNamedQuery("Usuario.findByLogin").setParameter("login", login).getSingleResult();
+    }
+    
+    public Usuario findByEmail(String email){
+        return createNamedQuery("Usuario.findByEmail").setParameter("email", email).getSingleResult();
     }
     
 }

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.getfit.beans;
+package br.com.getfit.controller;
 
 import br.com.getfit.dao.UsuarioDAO;
-import br.com.getfit.models.Usuario;
+import br.com.getfit.model.Usuario;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
@@ -23,14 +23,14 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
 @Named(value = "cadastroUsuariosMB")
 //@Dependent;
 @ManagedBean
-public class CadastroUsuariosMB {
+public class CadastroUsuariosController {
 
     private Usuario usuario;
 
     /**
      * Creates a new instance of UsuarioMB
      */
-    public CadastroUsuariosMB() {
+    public CadastroUsuariosController() {
         inicializar();
     }
 

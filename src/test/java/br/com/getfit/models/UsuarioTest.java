@@ -5,6 +5,7 @@
  */
 package br.com.getfit.models;
 
+import br.com.getfit.model.Usuario;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

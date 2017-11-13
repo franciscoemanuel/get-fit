@@ -3,7 +3,7 @@
   <persistence-unit name="getfitPU" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>getfit</jta-data-source>
-    <class>br.com.getfit.models.Usuario</class>
+    <class>br.com.getfit.model.Usuario</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
     </properties>

@@ -21,11 +21,11 @@
                 <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value=""/>
 
                 <p:outputLabel for="senha" value="Senha" />
-                <p:password id="senha" required="true" value=""/>
+                <p:password id="senha" required="true" value="#{loginController.senha}"/>
             </h:panelGrid>
 
             <div align="right" style="margin-top: 10px">
-                <p:commandButton value="Entrar" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+                <p:commandButton value="Entrar" update="panel" action="#{loginController.login()}" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
             </div>
 
             <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
