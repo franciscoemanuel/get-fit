@@ -26,6 +26,6 @@
         <property name="c3p0.idle_test_period">300</property>
         
         <!--LISTA DE ENTIDADES-->
-        <mapping class="br.com.getfit.models.Usuario" />
+        <mapping class="br.com.getfit.model.Usuario" />
     </session-factory>
 </hibernate-configuration>

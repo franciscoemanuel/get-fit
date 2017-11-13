@@ -3,6 +3,7 @@ package br.com.getfit.util;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.transaction.Transactional;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
 
@@ -12,6 +13,7 @@ import org.hibernate.SessionFactory;
  *
  * @author Francisco
  */
+@Transactional
 public class HibernateUtil {
 
     private static final EntityManagerFactory emf;
@@ -22,7 +24,7 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory from standard (hibernate.cfg.xml) 
             // config file.
-            emf = Persistence.createEntityManagerFactory("PAVI_PU");
+            emf = Persistence.createEntityManagerFactory("getfitPU");
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
             // Log the exception. 

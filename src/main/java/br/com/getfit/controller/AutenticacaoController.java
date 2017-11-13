@@ -1,6 +1,7 @@
 package br.com.getfit.controller;
 
 import br.com.getfit.model.Usuario;
+import java.io.IOException;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -15,19 +16,24 @@ import javax.faces.bean.SessionScoped;
 public class AutenticacaoController extends ControllerBase implements Serializable{
     
     public static final String INJECTION_NAME = "#{autenticacaoController}";
-    private Usuario user;
+    private Usuario usuario;
 
-    public Usuario getUser() {
-        return user;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Usuario user) {
-        this.user = user;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     
-    public String logOut(){
+    public boolean isUsuarioLogado () {
+        return this.usuario != null;
+    }
+    
+    public void logOut() throws IOException{
+        this.usuario = null;
         getRequest().getSession().invalidate();
-        return "login";
+        redirecionarPara("login");
     }
     
 }

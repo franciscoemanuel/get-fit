@@ -20,10 +20,9 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
  *
  * @author Francisco
  */
-@Named(value = "cadastroUsuariosMB")
 //@Dependent;
-@ManagedBean
-public class CadastroUsuariosController {
+@ManagedBean(name = "cadastroUsuariosMB")
+public class CadastroUsuariosController extends ControllerBase{
 
     private Usuario usuario;
 
@@ -66,12 +65,6 @@ public class CadastroUsuariosController {
 
     public void mensagemErro(String mensagem) {
         FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, " - Erro ao inserir"));
-    }
-
-    public void redirecionarPara(String url) throws IOException {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        ExternalContext ec = fc.getExternalContext();
-        ec.redirect(url);
     }
 
 }

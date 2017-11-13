@@ -26,4 +26,10 @@ public class SessionUtil {
     public static Usuario getUsuario() {
         return ((Usuario) getSession().getAttribute("usuario"));
     }
+
+    public static void setSessionAttribute(String attrName, Object attrValue) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        request.getSession().setAttribute(attrName, attrValue);
+    }
 }

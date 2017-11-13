@@ -18,7 +18,7 @@
 
             <h:panelGrid columns="2" cellpadding="5">
                 <p:outputLabel for="email" value="Email" />
-                <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value=""/>
+                <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{loginController.email}"/>
 
                 <p:outputLabel for="senha" value="Senha" />
                 <p:password id="senha" required="true" value="#{loginController.senha}"/>

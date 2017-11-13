@@ -2,6 +2,7 @@ package br.com.getfit.controller;
 
 import br.com.getfit.dao.UsuarioDAO;
 import br.com.getfit.model.Usuario;
+import br.com.getfit.util.SessionUtil;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -53,8 +54,11 @@ public class LoginController extends ControllerBase {
     public void login() {
         try {
             Usuario usuario = isCredenciaisValidas(email, senha);
-            System.out.println(usuario.getNome() + " autenticado com sucesso!");
+            autenticacaoController.setUsuario(usuario);
+            SessionUtil.setSessionAttribute("usuario", usuario);
+            redirecionarPara("/");
         } catch (Exception e) {
+            e.printStackTrace();
             sendErrorMessage(e.getMessage());
         }
     }

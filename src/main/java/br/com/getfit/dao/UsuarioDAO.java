@@ -14,8 +14,8 @@ import org.hibernate.Session;
  *
  * @author Francisco
  */
-public class UsuarioDAO extends DAOBase<Usuario>{
-    
+public class UsuarioDAO extends DAOBase<Usuario> {
+
     public void salvar(Usuario usuario) {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.beginTransaction();
@@ -23,7 +23,7 @@ public class UsuarioDAO extends DAOBase<Usuario>{
         sessao.getTransaction().commit();
         sessao.close();
     }
-    
+
     public List<Usuario> listar() {
         Session sessao = HibernateUtil.getSessionFactory().openSession();
         sessao.beginTransaction();
@@ -31,13 +31,17 @@ public class UsuarioDAO extends DAOBase<Usuario>{
         sessao.close();
         return usuarios;
     }
-    
-    public Usuario findByLogin(String login){
+
+    public Usuario findByLogin(String login) {
         return createNamedQuery("Usuario.findByLogin").setParameter("login", login).getSingleResult();
     }
     
-    public Usuario findByEmail(String email){
-        return createNamedQuery("Usuario.findByEmail").setParameter("email", email).getSingleResult();
+    public Usuario findByEmail(String email) {
+        Session sessao = HibernateUtil.getSessionFactory().openSession();
+        sessao.beginTransaction();
+        Usuario usuario = (Usuario) sessao.getNamedQuery("Usuarios.findByEmail").setParameter("email", email).getSingleResult();
+        sessao.close();
+        return usuario;
     }
-    
+
 }

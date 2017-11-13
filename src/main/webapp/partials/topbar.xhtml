@@ -3,11 +3,16 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:form>
-        <p:menubar class="">
+        <p:menubar class="" rendered="#{!autenticacaoController.usuarioLogado}">
             <p:menuitem value="Cadastre-se" url="/cadastro" icon="fa fa-user fa-fw"></p:menuitem>
             <p:menuitem value="Login" url="/login" icon="fa fa-sign-in fa-fw"></p:menuitem>
+        </p:menubar>
+        <p:menubar rendered="#{autenticacaoController.usuarioLogado}">
+            <p:menuitem value="#{autenticacaoController.usuario.nome}" icon="fa fa-user fa-fw"></p:menuitem>
+            <p:menuitem value="Logout" action="#{autenticacaoController.logOut()}" icon="fa fa-sign-out fa-fw"></p:menuitem>
         </p:menubar>
     </h:form>
     <style>
