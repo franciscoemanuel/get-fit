@@ -11,7 +11,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author Francisco
  */
-public class ControllerBase {
+public abstract class AbstractController {
 
     public void sendInfoMessage(String message) {
         FacesMessage facesMessage = createMessage(FacesMessage.SEVERITY_INFO, message);

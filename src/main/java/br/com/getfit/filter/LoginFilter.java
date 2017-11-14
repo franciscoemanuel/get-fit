@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * @author Francisco
  */
 @WebFilter(urlPatterns = "/*")
-public class LoginFilter extends FilterBase implements Filter {
+public class LoginFilter extends AbstractFilter implements Filter {
 
     @Override
     public void init(FilterConfig fc) throws ServletException {

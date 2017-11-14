@@ -10,11 +10,10 @@ import javax.faces.bean.SessionScoped;
  *
  * @author Francisco
  */
-
 @SessionScoped
 @ManagedBean(name = "autenticacaoController")
-public class AutenticacaoController extends ControllerBase implements Serializable{
-    
+public class AutenticacaoController extends AbstractController implements Serializable {
+
     public static final String INJECTION_NAME = "#{autenticacaoController}";
     private Usuario usuario;
 
@@ -25,15 +24,14 @@ public class AutenticacaoController extends ControllerBase implements Serializab
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    public boolean isUsuarioLogado () {
+
+    public boolean isUsuarioLogado() {
         return this.usuario != null;
     }
-    
-    public void logOut() throws IOException{
-        this.usuario = null;
+
+    public void logOut() throws IOException {
         getRequest().getSession().invalidate();
         redirecionarPara("login");
     }
-    
+
 }

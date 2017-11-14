@@ -13,7 +13,7 @@ import javax.faces.bean.RequestScoped;
  */
 @RequestScoped
 @ManagedBean(name = "loginController")
-public class LoginController extends ControllerBase {
+public class LoginController extends AbstractController {
 
     @ManagedProperty(value = AutenticacaoController.INJECTION_NAME)
     private AutenticacaoController autenticacaoController;
@@ -59,6 +59,7 @@ public class LoginController extends ControllerBase {
             redirecionarPara("/");
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             sendErrorMessage(e.getMessage());
         }
     }

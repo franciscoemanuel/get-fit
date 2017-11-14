@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
  */
 //@Dependent;
 @ManagedBean(name = "cadastroUsuariosMB")
-public class CadastroUsuariosController extends ControllerBase{
+public class CadastroUsuariosController extends AbstractController{
 
     private Usuario usuario;
 

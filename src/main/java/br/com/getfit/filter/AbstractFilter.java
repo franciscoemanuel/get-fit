@@ -12,11 +12,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Francisco
  */
-public class FilterBase {
+public abstract class AbstractFilter {
 
     protected void doLogin(ServletRequest request, ServletResponse res, HttpServletRequest req) throws ServletException, IOException {
-//        RequestDispatcher dispatcher = req.getRequestDispatcher("/login");
-//        dispatcher.forward(request, response);;
         HttpServletResponse response = (HttpServletResponse) res;
         response.sendRedirect("/login");
     }
