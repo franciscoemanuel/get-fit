@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMess
  */
 //@Dependent;
 @ManagedBean(name = "cadastroUsuariosMB")
-public class CadastroUsuariosController extends AbstractController{
+public class CadastroUsuariosController extends AbstractController {
 
     private Usuario usuario;
 
@@ -48,10 +48,10 @@ public class CadastroUsuariosController extends AbstractController{
             limparCampos();
             redirecionarPara("/login");
         } catch (PersistenceException e) {
-            this.mensagemErro(getRootCauseMessage(e));
+            this.sendErrorMessage(getRootCauseMessage(e));
         } catch (Exception e) {
             e.printStackTrace();
-            this.mensagemErro(e.getMessage());
+            this.sendErrorMessage(e.getMessage());
         }
     }
 
@@ -61,10 +61,6 @@ public class CadastroUsuariosController extends AbstractController{
 
     public void inicializar() {
         this.usuario = new Usuario();
-    }
-
-    public void mensagemErro(String mensagem) {
-        FacesContext.getCurrentInstance().addMessage("messages", new FacesMessage(FacesMessage.SEVERITY_ERROR, mensagem, " - Erro ao inserir"));
     }
 
 }

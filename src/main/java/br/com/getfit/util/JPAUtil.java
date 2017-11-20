@@ -18,18 +18,15 @@ public class JPAUtil {
 
     static {
         try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
-            // config file.
-            emf = Persistence.createEntityManagerFactory("getfitPU");
+            emf = Persistence.createEntityManagerFactory("getfitPU", PersistencePropertiesUtil.get());
         } catch (Throwable ex) {
-            // Log the exception. 
             System.err.println("Initial EntityManagerFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
 
     public static EntityManager getEntityManager() {
-        if (entityManager == null) {
+        if (entityManager == null || !entityManager.isOpen()) {
             entityManager = emf.createEntityManager();
         }
         return entityManager;

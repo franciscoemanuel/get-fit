@@ -6,13 +6,11 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
 
 /**
  *
  * @author Francisco
  */
-@Transactional
 public abstract class AbstractDAO<T> implements Serializable {
 
     private Class<T> entityClass;
@@ -26,26 +24,38 @@ public abstract class AbstractDAO<T> implements Serializable {
             JPAUtil.getEntityManager().getTransaction().begin();
             JPAUtil.getEntityManager().persist(entity);
             JPAUtil.getEntityManager().getTransaction().commit();
+            JPAUtil.getEntityManager().close();
         } catch (Exception e) {
+            JPAUtil.getEntityManager().getTransaction().rollback();
+            JPAUtil.getEntityManager().close();
             throw new RuntimeException(e.getMessage());
         }
     }
 
-    public void excluir(Object id) {
+    public void remover(Object id) {
         try {
             JPAUtil.getEntityManager().getTransaction().begin();
             JPAUtil.getEntityManager().remove(JPAUtil.getEntityManager().getReference(entityClass, id));
             JPAUtil.getEntityManager().getTransaction().commit();
+            JPAUtil.getEntityManager().close();
         } catch (Exception e) {
+            JPAUtil.getEntityManager().getTransaction().rollback();
+            JPAUtil.getEntityManager().close();
             throw new RuntimeException(e.getMessage());
         }
     }
 
     public T atualizar(T entity) {
-        JPAUtil.getEntityManager().getTransaction().begin();
-        T entidadeAtualizada = JPAUtil.getEntityManager().merge(entity);
-        JPAUtil.getEntityManager().getTransaction().commit();
-        return entidadeAtualizada;
+        try {
+            JPAUtil.getEntityManager().getTransaction().begin();
+            T entidadeAtualizada = JPAUtil.getEntityManager().merge(entity);
+            JPAUtil.getEntityManager().getTransaction().commit();
+            return entidadeAtualizada;
+        } catch (Exception e) {
+            JPAUtil.getEntityManager().getTransaction().rollback();
+            JPAUtil.getEntityManager().close();
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public T buscarPorId(int entityId) {

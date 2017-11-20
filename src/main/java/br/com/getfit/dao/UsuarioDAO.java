@@ -1,13 +1,11 @@
 package br.com.getfit.dao;
 
 import br.com.getfit.model.Usuario;
-import javax.transaction.Transactional;
 
 /**
  *
  * @author Francisco
  */
-@Transactional
 public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     public UsuarioDAO() {
@@ -20,6 +18,18 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     public Usuario findByEmail(String email) {
         return criaNamedQuery("Usuarios.findByEmail").setParameter("email", email).getSingleResult();
+    }
+    
+    public static void main(String[] args) {
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usuario = new Usuario();
+        usuario.setEmail("teste2@teste.com");
+        usuario.setNome("fulano");
+        usuario.setSenha("123456");
+        dao.salvar(usuario);
+        usuario.setNome("novo nome");
+        dao.atualizar(usuario);
+        dao.remover(usuario.getId());
     }
 
 }
