@@ -23,13 +23,13 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
     public static void main(String[] args) {
         UsuarioDAO dao = new UsuarioDAO();
         Usuario usuario = new Usuario();
-        usuario.setEmail("teste2@teste.com");
-        usuario.setNome("fulano");
+        usuario.setNome("teste");
         usuario.setSenha("123456");
+        usuario.setEmail("teste4@teste.com");
         dao.salvar(usuario);
-        usuario.setNome("novo nome");
+        usuario.setNome("nome diferente");
+        //usuario.setEmail("teste@teste.com");
         dao.atualizar(usuario);
-        dao.remover(usuario.getId());
     }
 
 }

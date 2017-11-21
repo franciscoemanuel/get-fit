@@ -25,6 +25,13 @@
             <property name="c3p0.timeout" value="300"/>
             <property name="c3p0.max_statements" value="80"/>
             <property name="c3p0.idle_test_period" value="300"/>
+            
+            <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE PERSISTIR-->
+            <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default,br.com.getfit.validator.PersistedOnlyValidations"/> 
+             
+            <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE ATUALIZAR-->
+            <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default,br.com.getfit.validator.PersistedOnlyValidations"/>     
+            
         </properties>
     </persistence-unit>
 </persistence>

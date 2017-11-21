@@ -1,5 +1,8 @@
 package br.com.getfit.model;
 
+import br.com.getfit.validator.NotPersistedValidations;
+import br.com.getfit.validator.PersistedOnlyValidations;
+import br.com.getfit.validator.Unique;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,11 +47,12 @@ public class Usuario implements Serializable {
     @NotNull
     @Email
     @Size(min = 6, max = 255, message = "O e-mail deve ter entre 6 a 255 caracteres")
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
+    @Unique(columnName = "email", entityClass = Usuario.class, message = "Esse e-mail já foi cadastrado", groups = PersistedOnlyValidations.class)
     private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 6, max = 12, message = "A senha deve ter entre 6 a 12 caracteres")
+    // @Size(min = 6, max = 12, message = "A senha deve ter entre 6 a 12 caracteres", groups = NotPersistedValidations.class)
     @Column(name = "senha")
     private String senha;
 

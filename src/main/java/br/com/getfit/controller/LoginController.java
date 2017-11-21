@@ -6,6 +6,7 @@ import br.com.getfit.util.SessionUtil;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -44,8 +45,8 @@ public class LoginController extends AbstractController {
     private Usuario isCredenciaisValidas(String email, String senha) throws Exception {
         Usuario usuario = new UsuarioDAO().findByEmail(email);
 
-        if (usuario == null || !senha.equals(usuario.getSenha())) {
-            throw new Exception("Credenciais inválidas");
+        if (usuario == null || !BCrypt.checkpw(senha, usuario.getSenha())) {
+            throw new Exception("E-mail ou senha incorretos");
         }
 
         return usuario;

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.getfit.models;
 
 import br.com.getfit.model.Usuario;
@@ -102,36 +97,6 @@ public class UsuarioTest {
         assertThat(restricoes, hasSize(1));
         assertThat(getNomeDaPropriedade(restricao), is("senha"));
         assertThat(getMensagem(restricao), is("não pode ser nulo"));
-    }
-
-    @Test
-    public void usuarioNaoPodeTerSenhaComMenosDeSeisCaracteres() {
-        Usuario usuario = new Usuario();
-        usuario.setNome("Fulano da Silva");
-        usuario.setSenha("12345");
-        usuario.setEmail("teste@teste.com");
-
-        Set<ConstraintViolation<Usuario>> restricoes = validator.validate(usuario);
-        ConstraintViolation<Usuario> restricao = getPrimeiraRestricao(restricoes);
-
-        assertThat(restricoes, hasSize(1));
-        assertThat(getNomeDaPropriedade(restricao), is("senha"));
-        assertThat(getMensagem(restricao), is("A senha deve ter entre 6 a 12 caracteres"));
-    }
-
-    @Test
-    public void usuarioNaoPodeTerSenhaComMaisDeDozeCaracteres() {
-        Usuario usuario = new Usuario();
-        usuario.setNome("Fulano da Silva");
-        usuario.setSenha("123456789101112");
-        usuario.setEmail("teste@teste.com");
-
-        Set<ConstraintViolation<Usuario>> restricoes = validator.validate(usuario);
-        ConstraintViolation<Usuario> restricao = getPrimeiraRestricao(restricoes);
-
-        assertThat(restricoes, hasSize(1));
-        assertThat(getNomeDaPropriedade(restricao), is("senha"));
-        assertThat(getMensagem(restricao), is("A senha deve ter entre 6 a 12 caracteres"));
     }
 
     @Test

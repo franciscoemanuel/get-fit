@@ -3,6 +3,9 @@ package br.com.getfit.util;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.metamodel.IdentifiableType;
+import javax.persistence.metamodel.Metamodel;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.transaction.Transactional;
 
 /**
@@ -30,5 +33,11 @@ public class JPAUtil {
             entityManager = emf.createEntityManager();
         }
         return entityManager;
+    }
+
+    public static <T> SingularAttribute<? super T, ?> getIdAttribute(Class<T> clazz) {
+        Metamodel m = getEntityManager().getMetamodel();
+        IdentifiableType<T> of = (IdentifiableType<T>) m.managedType(clazz);
+        return of.getId(of.getIdType().getJavaType());
     }
 }

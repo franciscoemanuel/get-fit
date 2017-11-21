@@ -153,6 +153,13 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- |||| DEPENDÊNCIA DO JBCRYPT |||| -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
 
     </dependencies>
 

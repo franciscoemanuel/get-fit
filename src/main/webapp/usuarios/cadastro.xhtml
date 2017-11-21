@@ -24,10 +24,10 @@
                 <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.usuario.email}"/>
 
                 <p:outputLabel for="senha" value="Senha" />
-                <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.usuario.senha}"/>
+                <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.usuario.senha}" maxlength="12"/>
 
                 <p:outputLabel for="senhaConfirmacao" value="Redigite a senha" />
-                <p:password id="senhaConfirmacao" required="true"/>
+                <p:password id="senhaConfirmacao" required="true" maxlength="12"/>
 
             </h:panelGrid>
             <div align="right" style="margin-top: 10px">
