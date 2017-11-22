@@ -1,8 +1,7 @@
 package br.com.getfit.model;
 
-import br.com.getfit.validator.NotPersistedValidations;
-import br.com.getfit.validator.PersistedOnlyValidations;
-import br.com.getfit.validator.Unique;
+import br.com.getfit.validation.PersistedOnlyValidations;
+import br.com.getfit.validation.Unique;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -22,6 +21,8 @@ import org.hibernate.validator.constraints.Email;
  *
  * @author Francisco
  */
+//Validações
+@Unique(columnNames = {"email"}, groups = PersistedOnlyValidations.class)
 @Entity(name = "Usuarios")
 @Table(name = "usuarios")
 @XmlRootElement
@@ -48,7 +49,6 @@ public class Usuario implements Serializable {
     @Email
     @Size(min = 6, max = 255, message = "O e-mail deve ter entre 6 a 255 caracteres")
     @Column(name = "email", unique = true)
-    @Unique(columnName = "email", entityClass = Usuario.class, message = "Esse e-mail já foi cadastrado", groups = PersistedOnlyValidations.class)
     private String email;
     @Basic(optional = false)
     @NotNull

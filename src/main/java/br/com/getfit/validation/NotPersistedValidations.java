@@ -1,4 +1,4 @@
-package br.com.getfit.validator;
+package br.com.getfit.validation;
 
 /**
  * Grupo de validação para os atributos que são validados 

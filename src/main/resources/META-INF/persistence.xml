@@ -27,10 +27,10 @@
             <property name="c3p0.idle_test_period" value="300"/>
             
             <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE PERSISTIR-->
-            <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default,br.com.getfit.validator.PersistedOnlyValidations"/> 
+            <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default,br.com.getfit.validation.PersistedOnlyValidations"/> 
              
             <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE ATUALIZAR-->
-            <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default,br.com.getfit.validator.PersistedOnlyValidations"/>     
+            <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default,br.com.getfit.validation.PersistedOnlyValidations"/>     
             
         </properties>
     </persistence-unit>
