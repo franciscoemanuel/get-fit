@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.Email;
  * @author Francisco
  */
 //Validações
-@Unique(columnNames = {"email"}, groups = PersistedOnlyValidations.class)
+@Unique(columnName = "email", groups = PersistedOnlyValidations.class, message = "Esse e-mail já foi cadastrado!")
 @Entity(name = "Usuarios")
 @Table(name = "usuarios")
 @XmlRootElement

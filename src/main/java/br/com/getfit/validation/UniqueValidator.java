@@ -20,11 +20,11 @@ import org.ocpsoft.shade.org.apache.commons.beanutils.PropertyUtils;
  */
 public class UniqueValidator implements ConstraintValidator<Unique, Serializable> {
 
-    private String[] columnNames;
+    private String columnName;
 
     @Override
     public void initialize(Unique uniqueAnnotation) {
-        columnNames = uniqueAnnotation.columnNames();
+        columnName = uniqueAnnotation.columnName();
     }
 
     @Override
@@ -34,12 +34,10 @@ public class UniqueValidator implements ConstraintValidator<Unique, Serializable
             return true;
         }
         try {
-            System.out.println(target.getClass());
+            Predicate busca = null;
             Class<?> entityClass = target.getClass();
             String colunaId = JPAUtil.getIdAttribute(entityClass).getName();
             Object valorId = PropertyUtils.getProperty(target, colunaId);
-
-            JPAUtil.getEntityManager().clear();
 
             CriteriaBuilder criteriaBuilder = JPAUtil.getEntityManager().getCriteriaBuilder();
             CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
@@ -47,24 +45,34 @@ public class UniqueValidator implements ConstraintValidator<Unique, Serializable
 
             SingularAttribute idAttribute = JPAUtil.getIdAttribute(entityClass);
             Path<?> pathToId = root.get(idAttribute);
-            
-            List<Predicate> predicates = new ArrayList<Predicate>(columnNames.length);
-            
-            for (String columnName : columnNames) {
-                Object valorUnico = PropertyUtils.getProperty(target, columnName);
-                Predicate buscaValor = criteriaBuilder.equal(root.get(columnName), valorUnico);
+
+            Object valorUnico = PropertyUtils.getProperty(target, columnName);
+
+            if (valorId == null) {
+                busca = criteriaBuilder.equal(root.get(columnName), valorUnico);
+                JPAUtil.getEntityManager().clear();
+            } else {
+                JPAUtil.getEntityManager().close();
                 Predicate diferenteDoId = criteriaBuilder.notEqual(root.get(colunaId), valorId);
+                Predicate buscaValor = criteriaBuilder.equal(root.get(columnName), valorUnico);
                 Predicate predicate = criteriaBuilder.and(buscaValor, diferenteDoId);
-                predicates.add(predicate);
             }
 
-            CriteriaQuery<Object> select = criteriaQuery.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
+            CriteriaQuery<Object> select = criteriaQuery.select(root).where(busca);
             valid = JPAUtil.getEntityManager().createQuery(select).getResultList().isEmpty();
-            
+
+            if (!valid) {
+                criaMensagensErro(columnName, context);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro ao validar unique contraint" + e.getMessage());
         }
         return valid;
+    }
+
+    private void criaMensagensErro(String columnNames, ConstraintValidatorContext context) {
+        context.disableDefaultConstraintViolation();
+        context.buildConstraintViolationWithTemplate(context.getDefaultConstraintMessageTemplate()).addPropertyNode(columnName).addConstraintViolation();
     }
 }

@@ -27,7 +27,7 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
         usuario.setSenha("123456");
         usuario.setEmail("teste4@teste.com");
         dao.salvar(usuario);
-        usuario.setNome("nome diferente");
+        usuario.setNome("Deve dar erro");
         usuario.setEmail("teste@teste.com");
         dao.atualizar(usuario);
         dao.remover(usuario.getId());

@@ -18,13 +18,13 @@ import javax.validation.Payload;
 @Documented
 public @interface Unique {
 
-    String message() default "{O valor inserido já existe no banco de dados}";
+    String message() default "O valor inserido já existe no banco de dados";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    String[] columnNames();
+    String columnName();
     
     @Target({ElementType.TYPE})
     @Retention(RUNTIME)

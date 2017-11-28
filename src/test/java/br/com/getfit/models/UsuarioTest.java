@@ -64,7 +64,6 @@ public class UsuarioTest {
 
         Set<ConstraintViolation<Usuario>> restricoes = validator.validate(usuario);
         ConstraintViolation<Usuario> restricao = getPrimeiraRestricao(restricoes);
-
         assertThat(restricoes, hasSize(1));
         assertThat(getNomeDaPropriedade(restricao), is("nome"));
         assertThat(getMensagem(restricao), is("não pode ser nulo"));

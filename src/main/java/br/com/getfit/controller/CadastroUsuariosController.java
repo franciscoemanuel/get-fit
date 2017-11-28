@@ -4,6 +4,7 @@ import br.com.getfit.dao.UsuarioDAO;
 import br.com.getfit.model.Usuario;
 import javax.faces.bean.ManagedBean;
 import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCauseMessage;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -38,6 +39,9 @@ public class CadastroUsuariosController extends AbstractController {
             redirecionarPara("/login");
         } catch (PersistenceException e) {
             this.sendErrorMessage(getRootCauseMessage(e));
+        } catch (ConstraintViolationException e) {
+            String mensagem = e.getConstraintViolations().iterator().next().getMessage();
+            this.sendErrorMessage(mensagem);
         } catch (Exception e) {
             e.printStackTrace();
             this.sendErrorMessage(e.getMessage());
