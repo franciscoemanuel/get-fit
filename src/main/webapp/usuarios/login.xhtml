@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-             xmlns:h="http://xmlns.jcp.org/jsf/html"
-             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="/template.xhtml"
-             xmlns:p="http://primefaces.org/ui"
-             xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:form>
-        <p:panel id="panel" class="ui-lg-8 ui-md-12 centered" header="Login">
-            <p:messages autoUpdate="true"/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/landingpage.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="loginPanel" class="ui-lg-6 ui-sm-10 ui-md-8 centered login" header="Login">
+                <p:growl autoUpdate="true"/>
 
-            <f:facet name="header">
-                <label>Login</label>
-                <a href="/cadastro" style="float: right">Não possuo uma conta</a>
-            </f:facet>
-            
-            <p:focus context="panel"/>
+                <f:facet name="header">
+                    <label>Login</label>
+                    <a href="/cadastro" style="float: right">Não possuo uma conta</a>
+                </f:facet>
 
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:outputLabel for="email" value="Email" />
-                <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{loginController.email}"/>
+                <p:focus context="loginPanel"/>
 
-                <p:outputLabel for="senha" value="Senha" />
-                <p:password id="senha" required="true" value="#{loginController.senha}"/>
-            </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="email" value="Email" />
+                    <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{loginController.email}"/>
 
-            <div align="right" style="margin-top: 10px">
-                <p:commandButton value="Entrar" update="panel" action="#{loginController.login()}" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
-            </div>
+                    <p:outputLabel for="senha" value="Senha" />
+                    <p:password id="senha" required="true" value="#{loginController.senha}"/>
+                </h:panelGrid>
 
-            <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
-        </p:panel>
-    </h:form>
-</ui:decorate>
+                <div align="right" style="margin-top: 10px">
+                    <p:commandButton value="Entrar" update="loginPanel" action="#{loginController.login()}" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+                </div>
+
+                <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
+            </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

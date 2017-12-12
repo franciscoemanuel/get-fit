@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
-             xmlns:h="http://xmlns.jcp.org/jsf/html"
-             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-             template="/template.xhtml"
-             xmlns:p="http://primefaces.org/ui"
-             xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:form>
-        <p:panel id="panel" class="ui-lg-8 ui-md-12 centered" header="Cadastro">
-            <p:messages autoUpdate="true"/>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/landingpage.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:panel id="panel" class="ui-lg-8 ui-md-12 centered cadastro" header="Cadastro">
+                <p:growl autoUpdate="true"/>
 
-            <f:facet name="header">
-                <label>Cadastro</label>
-                <a href="/login" style="float: right">Já tenho uma conta</a>
-            </f:facet>
-            
-            <p:focus context="panel"/>
-            
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputLabel for="nome" value="Nome completo"/>
-                <p:inputText size="100" id="nome" required="true" placeholder="Fulano da Silva" value="#{cadastroUsuariosMB.usuario.nome}"/>
+                <f:facet name="header">
+                    <label>Cadastro</label>
+                    <a href="/login" style="float: right">Já tenho uma conta</a>
+                </f:facet>
 
-                <p:outputLabel for="email" value="Email" />
-                <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.usuario.email}"/>
+                <p:focus context="panel"/>
 
-                <p:outputLabel for="senha" value="Senha" />
-                <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.usuario.senha}" maxlength="12"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="nome" value="Nome completo"/>
+                    <p:inputText size="100" id="nome" required="true" placeholder="Fulano da Silva" value="#{cadastroUsuariosMB.usuario.nome}"/>
 
-                <p:outputLabel for="senhaConfirmacao" value="Redigite a senha" />
-                <p:password id="senhaConfirmacao" required="true" maxlength="12"/>
+                    <p:outputLabel for="email" value="Email" />
+                    <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.usuario.email}"/>
 
-            </h:panelGrid>
-            <div align="right" style="margin-top: 10px">
-                <p:commandButton value="Cadastrar" action="${cadastroUsuariosMB.cadastrarUsuario()}" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
-            </div>
-        </p:panel>
+                    <p:outputLabel for="senha" value="Senha" />
+                    <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.usuario.senha}" maxlength="12"/>
 
-        <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
-    </h:form>
-</ui:decorate>
+                    <p:outputLabel for="senhaConfirmacao" value="Redigite a senha" />
+                    <p:password id="senhaConfirmacao" required="true" maxlength="12"/>
+
+                </h:panelGrid>
+                <div align="right" style="margin-top: 10px">
+                    <p:commandButton value="Cadastrar" action="${cadastroUsuariosMB.cadastrarUsuario()}" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
+                </div>
+            </p:panel>
+
+            <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
+        </h:form>
+    </ui:define>
+
+</ui:composition>

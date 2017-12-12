@@ -19,19 +19,19 @@
 
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
         <h:outputScript target="body" name="js/app.js" />
+
+        <style type="text/css">
+            body {
+                background: url("resources/images/background.jpg") no-repeat center center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
     </h:head>
 
     <h:body>
-
-        <header class="aw-topbar">
-            <h:graphicImage name="images/logo.png" />
-
-            <a href="#" class="aw-toggle js-toggle"><i class="fa fa-bars"></i></a>
-        </header>
-
-        <aside class="aw-sidebar  js-sidebar">
-            <ui:include src="Menu.xhtml" />
-        </aside>
 
         <section class="aw-content  js-content">
             <ui:insert name="content" />

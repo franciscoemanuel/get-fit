@@ -2,7 +2,18 @@ input {
     width: 100%
 }
 .centered {
-    margin-top: 3em;
-    margin-right: auto;
-    margin-left: auto;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.login {
+    height: 150px;
+}
+
+.cadastro {
+    height: 250px;
 }
