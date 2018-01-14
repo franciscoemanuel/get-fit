@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.getfit.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,8 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,9 +30,16 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Avaliacao.findAll", query = "SELECT a FROM Avaliacao a")
     , @NamedQuery(name = "Avaliacao.findByNota", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota")
     , @NamedQuery(name = "Avaliacao.findByComentario", query = "SELECT a FROM Avaliacao a WHERE a.comentario = :comentario")
-    , @NamedQuery(name = "Avaliacao.findByIdAvaliacao", query = "SELECT a FROM Avaliacao a WHERE a.idAvaliacao = :idAvaliacao")
-    , @NamedQuery(name = "Avaliacao.findByDataCriacao", query = "SELECT a FROM Avaliacao a WHERE a.dataCriacao = :dataCriacao")})
+    , @NamedQuery(name = "Avaliacao.findByDataCriacao", query = "SELECT a FROM Avaliacao a WHERE a.dataCriacao = :dataCriacao")
+    , @NamedQuery(name = "Avaliacao.findByIdAvaliacao", query = "SELECT a FROM Avaliacao a WHERE a.idAvaliacao = :idAvaliacao")})
 public class Avaliacao implements Serializable {
+
+    @JoinColumn(name = "idCentro", referencedColumnName = "IdCentro")
+    @ManyToOne(optional = false)
+    private CentroEsportivo idCentro;
+    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa")
+    @ManyToOne(optional = false)
+    private Pessoa idPessoa;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -49,21 +48,14 @@ public class Avaliacao implements Serializable {
     @Size(max = 255)
     @Column(name = "comentario")
     private String comentario;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.DATE)
+    private Date dataCriacao;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idAvaliacao")
     private Integer idAvaliacao;
-    @Column(name = "dataCriacao")
-    @Temporal(TemporalType.DATE)
-    private Date dataCriacao;
-    @JoinTable(name = "avaliacoes_centros", joinColumns = {
-        @JoinColumn(name = "idAvaliacao", referencedColumnName = "idAvaliacao")}, inverseJoinColumns = {
-        @JoinColumn(name = "idCentro", referencedColumnName = "idCentro")})
-    @ManyToMany
-    private Collection<CentroEsportivo> centroEsportivoCollection;
-    @ManyToMany(mappedBy = "avaliacaoCollection")
-    private Collection<Pessoas> pessoasCollection;
 
     public Avaliacao() {
     }
@@ -88,14 +80,6 @@ public class Avaliacao implements Serializable {
         this.comentario = comentario;
     }
 
-    public Integer getIdAvaliacao() {
-        return idAvaliacao;
-    }
-
-    public void setIdAvaliacao(Integer idAvaliacao) {
-        this.idAvaliacao = idAvaliacao;
-    }
-
     public Date getDataCriacao() {
         return dataCriacao;
     }
@@ -104,22 +88,12 @@ public class Avaliacao implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    @XmlTransient
-    public Collection<CentroEsportivo> getCentroEsportivoCollection() {
-        return centroEsportivoCollection;
+    public Integer getIdAvaliacao() {
+        return idAvaliacao;
     }
 
-    public void setCentroEsportivoCollection(Collection<CentroEsportivo> centroEsportivoCollection) {
-        this.centroEsportivoCollection = centroEsportivoCollection;
-    }
-
-    @XmlTransient
-    public Collection<Pessoas> getPessoasCollection() {
-        return pessoasCollection;
-    }
-
-    public void setPessoasCollection(Collection<Pessoas> pessoasCollection) {
-        this.pessoasCollection = pessoasCollection;
+    public void setIdAvaliacao(Integer idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
     }
 
     @Override
@@ -145,6 +119,22 @@ public class Avaliacao implements Serializable {
     @Override
     public String toString() {
         return "br.com.getfit.model.Avaliacao[ idAvaliacao=" + idAvaliacao + " ]";
+    }
+
+    public CentroEsportivo getIdCentro() {
+        return idCentro;
+    }
+
+    public void setIdCentro(CentroEsportivo idCentro) {
+        this.idCentro = idCentro;
+    }
+
+    public Pessoa getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(Pessoa idPessoa) {
+        this.idPessoa = idPessoa;
     }
     
 }

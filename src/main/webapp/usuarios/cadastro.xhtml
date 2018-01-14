@@ -18,19 +18,61 @@
                 <p:focus context="panel"/>
 
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="nome" value="Nome completo"/>
-                    <p:inputText size="100" id="nome" required="true" placeholder="Fulano da Silva" value="#{cadastroUsuariosMB.usuario.nome}"/>
+                    <p:outputLabel for="tipoCadastro" value="Tipo de cadastro: " />
+                    <p:selectOneRadio id="tipoCadastro" value="#{cadastroUsuariosMB.tipoCadastro}" >
+                        <f:selectItem itemLabel="Pessoa" itemValue="pessoa"/>
+                        <f:selectItem itemLabel="Centro Esportivo" itemValue="centroEsportivo" />
+                        <p:ajax update="panel"/>  
+                    </p:selectOneRadio>
+                </h:panelGrid>
+                
+                <h:panelGrid columns="2" cellpadding="5" rendered="#{cadastroUsuariosMB.tipoCadastro == 'pessoa'}">
+                    <h:outputLabel for="nomePessoa" value="Nome: "/>
+                    <p:inputText size="100" id="nomePessoa" required="true" placeholder="Fulano da Silva" value="#{cadastroUsuariosMB.pessoa.nome}"/>
+
+                    <p:outputLabel for="emailPessoa" value="Email" />
+                    <p:inputText size="100" id="emailPessoa" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.pessoa.email}"/>
+
+                    <p:outputLabel for="senhaPessoa" value="Senha" />
+                    <p:password id="senhaPessoa" required="true" match="senhaConfirmacaoPessoa" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.pessoa.senha}" maxlength="12"/>
+
+                    <p:outputLabel for="senhaConfirmacaoPessoa" value="Redigite a senha" />
+                    <p:password id="senhaConfirmacaoPessoa" required="true" maxlength="12"/>
+                    
+                    <h:outputLabel for="sexoPessoa" value="Sexo: "/>
+                    <p:selectOneRadio id="sexoPessoa" value="#{cadastroUsuariosMB.pessoa.sexo}">
+                        <f:selectItem itemLabel="Masculino" itemValue="m"/>
+                        <f:selectItem itemLabel="Feminino" itemValue="f" />
+                        <f:selectItem itemLabel="Outro" itemValue="o" />
+                    </p:selectOneRadio>
+
+                    <p:outputLabel for="bio" value="Bio: " />
+                    <p:inputText id="bio" required="true" value="#{cadastroUsuariosMB.pessoa.bio}" placeholder="Descrição sobre você" />
+
+                </h:panelGrid>
+                
+                 <h:panelGrid columns="2" cellpadding="5" rendered="#{cadastroUsuariosMB.tipoCadastro == 'centroEsportivo'}">
+                    <h:outputLabel for="nome" value="Nome: "/>
+                    <p:inputText size="100" id="nome" required="true" placeholder="FisioCorpus Pilates - Unidade Serraria" value="#{cadastroUsuariosMB.centroEsportivo.nome}"/>
 
                     <p:outputLabel for="email" value="Email" />
-                    <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.usuario.email}"/>
+                    <p:inputText size="100" id="email" required="true" placeholder="exemplo@exemplo.com" value="#{cadastroUsuariosMB.centroEsportivo.email}"/>
 
                     <p:outputLabel for="senha" value="Senha" />
-                    <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.usuario.senha}" maxlength="12"/>
+                    <p:password id="senha" required="true" match="senhaConfirmacao" validatorMessage="As senhas devem ser iguais" value="#{cadastroUsuariosMB.centroEsportivo.senha}" maxlength="12"/>
 
                     <p:outputLabel for="senhaConfirmacao" value="Redigite a senha" />
                     <p:password id="senhaConfirmacao" required="true" maxlength="12"/>
+                    
+                    <h:outputLabel for="localizacao" value="Localização: "/>
+                    <p:inputText size="100" id="localizacao" required="true" placeholder="Rua santo amaro, nº 20" value="#{cadastroUsuariosMB.centroEsportivo.localizacao}"/>
 
+                    <p:outputLabel for="descricao" value="Descricao: " />
+                    <p:inputText id="descricao" required="true" value="#{cadastroUsuariosMB.centroEsportivo.descricao}" placeholder="Ginásio voltado para prática de futsal, handeball e volei"/>
+                    
                 </h:panelGrid>
+
+
                 <div align="right" style="margin-top: 10px">
                     <p:commandButton value="Cadastrar" action="${cadastroUsuariosMB.cadastrarUsuario()}" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
                 </div>

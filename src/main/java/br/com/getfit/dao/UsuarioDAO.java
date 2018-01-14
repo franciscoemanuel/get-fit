@@ -17,20 +17,7 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
     }
 
     public Usuario findByEmail(String email) {
-        return criaNamedQuery("Usuarios.findByEmail").setParameter("email", email).getSingleResult();
+        return criaNamedQuery("Usuario.findByEmail").setParameter("email", email).getSingleResult();
     }
     
-    public static void main(String[] args) {
-        UsuarioDAO dao = new UsuarioDAO();
-        Usuario usuario = new Usuario();
-        usuario.setNome("teste");
-        usuario.setSenha("123456");
-        usuario.setEmail("teste4@teste.com");
-        dao.salvar(usuario);
-        usuario.setNome("Deve dar erro");
-        usuario.setEmail("teste@teste.com");
-        dao.atualizar(usuario);
-        dao.remover(usuario.getId());
-    }
-
 }

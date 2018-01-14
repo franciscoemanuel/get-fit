@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.getfit.model;
 
 import java.io.Serializable;
@@ -16,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * @author Francisco
  */
 @Embeddable
-public class MatriculasPK implements Serializable {
+public class MatriculaPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -24,20 +19,20 @@ public class MatriculasPK implements Serializable {
     private int idPessoa;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idCentro")
+    @Column(name = "IdCentro")
     private int idCentro;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idAtividade")
-    private int idAtividade;
+    @Column(name = "idOferta")
+    private int idOferta;
 
-    public MatriculasPK() {
+    public MatriculaPK() {
     }
 
-    public MatriculasPK(int idPessoa, int idCentro, int idAtividade) {
+    public MatriculaPK(int idPessoa, int idCentro, int idOferta) {
         this.idPessoa = idPessoa;
         this.idCentro = idCentro;
-        this.idAtividade = idAtividade;
+        this.idOferta = idOferta;
     }
 
     public int getIdPessoa() {
@@ -56,12 +51,12 @@ public class MatriculasPK implements Serializable {
         this.idCentro = idCentro;
     }
 
-    public int getIdAtividade() {
-        return idAtividade;
+    public int getIdOferta() {
+        return idOferta;
     }
 
-    public void setIdAtividade(int idAtividade) {
-        this.idAtividade = idAtividade;
+    public void setIdOferta(int idOferta) {
+        this.idOferta = idOferta;
     }
 
     @Override
@@ -69,24 +64,24 @@ public class MatriculasPK implements Serializable {
         int hash = 0;
         hash += (int) idPessoa;
         hash += (int) idCentro;
-        hash += (int) idAtividade;
+        hash += (int) idOferta;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof MatriculasPK)) {
+        if (!(object instanceof MatriculaPK)) {
             return false;
         }
-        MatriculasPK other = (MatriculasPK) object;
+        MatriculaPK other = (MatriculaPK) object;
         if (this.idPessoa != other.idPessoa) {
             return false;
         }
         if (this.idCentro != other.idCentro) {
             return false;
         }
-        if (this.idAtividade != other.idAtividade) {
+        if (this.idOferta != other.idOferta) {
             return false;
         }
         return true;
@@ -94,7 +89,7 @@ public class MatriculasPK implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.getfit.model.MatriculasPK[ idPessoa=" + idPessoa + ", idCentro=" + idCentro + ", idAtividade=" + idAtividade + " ]";
+        return "br.com.getfit.model.MatriculaPK[ idPessoa=" + idPessoa + ", idCentro=" + idCentro + ", idOferta=" + idOferta + " ]";
     }
     
 }

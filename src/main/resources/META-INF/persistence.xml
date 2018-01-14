@@ -1,37 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="getfitPU">
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>br.com.getfit.model.Usuario</class>
-        <exclude-unlisted-classes>true</exclude-unlisted-classes>
-        <properties>
-            <!-- Propriedades JDBC -->
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/getfit?zeroDateTimeBehavior=convertToNull&amp;useTimezone=true&amp;serverTimezone=UTC" />
-            <property name="javax.persistence.jdbc.user" value="root" />
-            <property name="javax.persistence.jdbc.password" value="root" />
-
-            <!-- Configuracoes especificas do Hibernate -->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
-            <!-- Usamos update para atualizar sempre o banco de acordo com nosso modelo -->
-            <property name="hibernate.hbm2ddl.auto" value="update" />
-            <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.format_sql" value="true" />
-            <!--<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>-->
-            
-            <!-- CONFIGURAÇÕES DO POOL DE CONEXÕES -->
-            <property name="c3p0.min_size" value="1"/>
-            <property name="c3p0.max_size" value="20"/>
-            <property name="c3p0.timeout" value="300"/>
-            <property name="c3p0.max_statements" value="80"/>
-            <property name="c3p0.idle_test_period" value="300"/>
-            
-            <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE PERSISTIR-->
-            <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default,br.com.getfit.validation.PersistedOnlyValidations"/> 
-             
-            <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE ATUALIZAR-->
-            <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default,br.com.getfit.validation.PersistedOnlyValidations"/>     
-            
-        </properties>
-    </persistence-unit>
+  <persistence-unit name="getfitPU">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>br.com.getfit.model.Usuario</class>
+    <class>br.com.getfit.model.AtividadeFisica</class>
+    <class>br.com.getfit.model.AtividadeFisicaOfertada</class>
+    <class>br.com.getfit.model.Avaliacao</class>
+    <class>br.com.getfit.model.CentroEsportivo</class>
+    <class>br.com.getfit.model.Matricula</class>
+    <class>br.com.getfit.model.Pessoa</class>
+    <class>br.com.getfit.model.Post</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <!-- Propriedades JDBC -->
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/getfit?zeroDateTimeBehavior=convertToNull&amp;useTimezone=true&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+      <!-- Configuracoes especificas do Hibernate -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+      <!-- Usamos update para atualizar sempre o banco de acordo com nosso modelo -->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <!--<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>-->
+      <!-- CONFIGURAÇÕES DO POOL DE CONEXÕES -->
+      <property name="c3p0.min_size" value="1"/>
+      <property name="c3p0.max_size" value="20"/>
+      <property name="c3p0.timeout" value="300"/>
+      <property name="c3p0.max_statements" value="80"/>
+      <property name="c3p0.idle_test_period" value="300"/>
+      <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE PERSISTIR-->
+      <property name="javax.persistence.validation.group.pre-persist" value="javax.validation.groups.Default,br.com.getfit.validation.PersistedOnlyValidations"/>
+      <!-- GRUPOS DE VALIDAÇÃO VALIDADOS ANTES DE ATUALIZAR-->
+      <property name="javax.persistence.validation.group.pre-update" value="javax.validation.groups.Default,br.com.getfit.validation.PersistedOnlyValidations"/>
+    </properties>
+  </persistence-unit>
 </persistence>

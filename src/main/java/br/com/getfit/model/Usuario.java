@@ -3,95 +3,75 @@ package br.com.getfit.model;
 import br.com.getfit.validation.PersistedOnlyValidations;
 import br.com.getfit.validation.Unique;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.validator.constraints.Email;
 
 /**
  *
  * @author Francisco
  */
-//Validações
 @Unique(columnName = "email", groups = PersistedOnlyValidations.class, message = "Esse e-mail já foi cadastrado!")
-@Entity(name = "Usuarios")
-@Table(name = "usuarios")
+@Entity
+@Table(name = "usuario")
 @XmlRootElement
+@Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries({
-    @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u"),
-    @NamedQuery(name = "Usuarios.findById", query = "SELECT u FROM Usuarios u WHERE u.id = :id"),
-    @NamedQuery(name = "Usuarios.findByNome", query = "SELECT u FROM Usuarios u WHERE u.nome = :nome"),
-    @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email"),
-    @NamedQuery(name = "Usuarios.findBySenha", query = "SELECT u FROM Usuarios u WHERE u.senha = :senha")})
-public class Usuario implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = true)
-    @Column(name = "id")
-    private Integer id;
-    @Basic(optional = false)
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
+    , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")
+    , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+    , @NamedQuery(name = "Usuario.findByTipoUsuario", query = "SELECT u FROM Usuario u WHERE u.tipoUsuario = :tipoUsuario")
+    , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")})
+public abstract class Usuario implements Serializable {
+
     @NotNull
     @Size(min = 3, max = 255, message = "O nome deve ter entre 3 a 255 caracteres")
     @Column(name = "nome")
     private String nome;
-    @Basic(optional = false)
+
+    private static final long serialVersionUID = 1L;
+    @NotNull
+    @Size(max = 255)
+    @Column(name = "senha")
+    private String senha;
     @NotNull
     @Email
     @Size(min = 6, max = 255, message = "O e-mail deve ter entre 6 a 255 caracteres")
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
+    @Size(max = 255)
+    @Column(name = "tipoUsuario")
+    private String tipoUsuario;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    // @Size(min = 6, max = 12, message = "A senha deve ter entre 6 a 12 caracteres", groups = NotPersistedValidations.class)
-    @Column(name = "senha")
-    private String senha;
+    @Column(name = "idUsuario")
+    private Integer idUsuario;
+    @OneToMany(mappedBy = "idUsuario")
+    private Collection<Pessoa> pessoaCollection;
+    @OneToMany(mappedBy = "idUsuario")
+    private Collection<CentroEsportivo> centroEsportivoCollection;
 
     public Usuario() {
     }
 
-    public Usuario(Integer id) {
-        this.id = id;
-    }
-
-    public Usuario(Integer id, String nome, String email, String senha) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public Usuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getSenha() {
@@ -102,10 +82,52 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    @XmlTransient
+    public Collection<Pessoa> getPessoaCollection() {
+        return pessoaCollection;
+    }
+
+    public void setPessoaCollection(Collection<Pessoa> pessoaCollection) {
+        this.pessoaCollection = pessoaCollection;
+    }
+
+    @XmlTransient
+    public Collection<CentroEsportivo> getCentroEsportivoCollection() {
+        return centroEsportivoCollection;
+    }
+
+    public void setCentroEsportivoCollection(Collection<CentroEsportivo> centroEsportivoCollection) {
+        this.centroEsportivoCollection = centroEsportivoCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
         return hash;
     }
 
@@ -116,7 +138,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
             return false;
         }
         return true;
@@ -124,7 +146,15 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.ifal.pavi.models.Usuarios[ id=" + id + " ]";
+        return "br.com.getfit.model.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
     
 }

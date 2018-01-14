@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.getfit.model;
 
 import java.io.Serializable;
@@ -29,24 +24,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p")
-    , @NamedQuery(name = "Post.findByIdPost", query = "SELECT p FROM Post p WHERE p.idPost = :idPost")
     , @NamedQuery(name = "Post.findByMensagem", query = "SELECT p FROM Post p WHERE p.mensagem = :mensagem")
-    , @NamedQuery(name = "Post.findByTitulo", query = "SELECT p FROM Post p WHERE p.titulo = :titulo")})
+    , @NamedQuery(name = "Post.findByTitulo", query = "SELECT p FROM Post p WHERE p.titulo = :titulo")
+    , @NamedQuery(name = "Post.findByIdPost", query = "SELECT p FROM Post p WHERE p.idPost = :idPost")})
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idPost")
-    private Integer idPost;
     @Size(max = 255)
     @Column(name = "mensagem")
     private String mensagem;
     @Size(max = 255)
     @Column(name = "titulo")
     private String titulo;
-    @JoinColumn(name = "idCentro", referencedColumnName = "idCentro")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idPost")
+    private Integer idPost;
+    @JoinColumn(name = "IdCentro", referencedColumnName = "IdCentro")
     @ManyToOne
     private CentroEsportivo idCentro;
 
@@ -54,14 +49,6 @@ public class Post implements Serializable {
     }
 
     public Post(Integer idPost) {
-        this.idPost = idPost;
-    }
-
-    public Integer getIdPost() {
-        return idPost;
-    }
-
-    public void setIdPost(Integer idPost) {
         this.idPost = idPost;
     }
 
@@ -79,6 +66,14 @@ public class Post implements Serializable {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public Integer getIdPost() {
+        return idPost;
+    }
+
+    public void setIdPost(Integer idPost) {
+        this.idPost = idPost;
     }
 
     public CentroEsportivo getIdCentro() {
