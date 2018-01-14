@@ -31,28 +31,44 @@ public class LoginFilter extends AbstractFilter implements Filter {
     public void doFilter(ServletRequest sreq, ServletResponse sres, FilterChain fc) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) sreq;
         HttpServletResponse response = (HttpServletResponse) sres;
-
         HttpSession sessao = request.getSession();
         Usuario usuario = (Usuario) sessao.getAttribute("usuario");
-
-        if (isUrlRedirecionavel(request.getRequestURI()) && (sessao.isNew() || usuario == null)) {
+        String url = request.getRequestURI();
+        boolean isUrlRedirecionavel = !isUrlAutenticacao(url) && !isResource(url);
+        
+        if (isUrlRedirecionavel && (sessao.isNew() || usuario == null)) {
             doLogin(sreq, sres, request);
-        } else {
+        } else if (!isResource(url) && usuario != null && !usuarioPossuiPermissaoDeAcesso(url, usuario.getTipoUsuario())) {
+            redirecionaParaHome(sreq, sres, request, usuario.getTipoUsuario());
+        }
+        else {
             fc.doFilter(sreq, sres);
         }
     }
     
-    private boolean isUrlRedirecionavel(String url) {
-        String[] urlsAutenticacao = {"login", "cadastro", "logout"};
+    private boolean isResource(String url) {
         String[] urlsResource = {ResourceHandler.RESOURCE_IDENTIFIER, "resources"};
-        boolean isUrlAutenticacao = Arrays.stream(urlsAutenticacao).anyMatch(urlAutenticacao -> url.endsWith(urlAutenticacao));
         boolean isResource = Arrays.stream(urlsResource).anyMatch(resource -> url.contains(resource));
-        return (!isUrlAutenticacao && !isResource);
+        return isResource;
     }
-
+    
+    private boolean isUrlAutenticacao(String url) {
+        String[] urlsAutenticacao = {"login", "cadastro", "logout"};
+        boolean isUrlAutenticacao = Arrays.stream(urlsAutenticacao).anyMatch(urlAutenticacao -> url.endsWith(urlAutenticacao));
+        return isUrlAutenticacao;
+    }
+    
+    private boolean usuarioPossuiPermissaoDeAcesso(String url, String tipoUsuario) {
+        return tipoUsuario.equals("pessoa") ? url.contains("/pessoa") : url.contains("/centroEsportivo");
+    }
+     
     @Override
     public void destroy() {
         // throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public static void main(String[] args) {
+        System.out.println("br.com.getfit.filter.LoginFilter.main()");
     }
 
 }

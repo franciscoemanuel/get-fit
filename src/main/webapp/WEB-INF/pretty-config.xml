@@ -1,22 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
                       http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
-
-	<url-mapping id="cadastro">
-		<pattern value="/cadastro" />
-		<view-id value="/usuarios/cadastro.xhtml" />
-	</url-mapping>
+    
+    <!--Usuários-->
+    
+    <url-mapping id="cadastro">
+        <pattern value="/cadastro" />
+        <view-id value="/usuarios/cadastro.xhtml" />
+    </url-mapping>
         
-        <url-mapping id="login">
-		<pattern value="/login" />
-		<view-id value="/usuarios/login.xhtml" />
-	</url-mapping>
+    <url-mapping id="login">
+        <pattern value="/login" />
+        <view-id value="/usuarios/login.xhtml" />
+    </url-mapping>
+    
+    <!--Centro esportivo-->
         
-        <!--<url-mapping id="centroEsportivo">
-		<pattern value="/centros-esportivos/#{id}" />
-		<view-id value="/centrosEsportivos/centro-esportivo.xhtml" />
-	</url-mapping>-->
+    <url-mapping id="centroEsportivo">
+        <pattern value="/centroEsportivo" />
+        <view-id value="/centroEsportivo/index.xhtml" />
+    </url-mapping>
+        
+    <url-mapping id="alunosMatriculados">
+        <pattern value="/centroEsportivo/alunosMatriculados" />
+        <view-id value="/centroEsportivo/alunosMatriculados.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="turmas">
+        <pattern value="/centroEsportivo/turmas" />
+        <view-id value="/centroEsportivo/turmas.xhtml" />
+    </url-mapping>
+    
+        
+    <!--Pessoa-->
+        
+    <url-mapping id="pessoa">
+        <pattern value="/pessoa" />
+        <view-id value="/pessoa/index.xhtml" />
+    </url-mapping>
+        
+    <url-mapping id="buscarAtividades">
+        <pattern value="/pessoa/buscarAtividades" />
+        <view-id value="/pessoa/buscarAtividades.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="minhasAtividades">
+        <pattern value="/pessoa/minhasAtividades" />
+        <view-id value="/pessoa/minhasAtividades.xhtml" />
+    </url-mapping>
+                
+    <!--<url-mapping id="centroEsportivo">
+            <pattern value="/centros-esportivos/#{id}" />
+            <view-id value="/centrosEsportivos/centro-esportivo.xhtml" />
+    </url-mapping>-->
 
 </pretty-config>

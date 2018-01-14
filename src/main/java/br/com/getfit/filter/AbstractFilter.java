@@ -23,4 +23,14 @@ public abstract class AbstractFilter {
         RequestDispatcher dispatcher = req.getRequestDispatcher("acessoNegado");
         dispatcher.forward(request, response);
     }
+    
+    protected void redirecionaParaHome(ServletRequest request, ServletResponse res, HttpServletRequest req, String tipoUsuario) throws ServletException, IOException {
+        HttpServletResponse response = (HttpServletResponse) res;
+        if (tipoUsuario.equals("pessoa")) {
+            response.sendRedirect("/pessoa");
+        } else {
+            response.sendRedirect("/centroEsportivo");
+        }
+    }
+    
 }

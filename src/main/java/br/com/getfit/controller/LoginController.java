@@ -57,7 +57,8 @@ public class LoginController extends AbstractController {
             Usuario usuario = isCredenciaisValidas(email, senha);
             autenticacaoController.setUsuario(usuario);
             SessionUtil.setSessionAttribute("usuario", usuario);
-            redirecionarPara("/");
+            String linkHomePage = usuario.getTipoUsuario().equals("pessoa") ? "/pessoa" : "/centroEsportivo";
+            redirecionarPara(linkHomePage);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e.getMessage());

@@ -31,7 +31,7 @@ public class AutenticacaoController extends AbstractController implements Serial
 
     public void logOut() throws IOException {
         getRequest().getSession().invalidate();
-        redirecionarPara("login");
+        redirecionarPara("/login");
     }
 
 }
