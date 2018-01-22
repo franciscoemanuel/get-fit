@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")
     , @NamedQuery(name = "Matricula.findByIdPessoa", query = "SELECT m FROM Matricula m WHERE m.matriculaPK.idPessoa = :idPessoa")
     , @NamedQuery(name = "Matricula.findByIdCentro", query = "SELECT m FROM Matricula m WHERE m.matriculaPK.idCentro = :idCentro")
-    , @NamedQuery(name = "Matricula.findByIdOferta", query = "SELECT m FROM Matricula m WHERE m.matriculaPK.idOferta = :idOferta")})
+    , @NamedQuery(name = "Matricula.findByIdTurma", query = "SELECT m FROM Matricula m WHERE m.matriculaPK.idTurma=  :idTurma")})
 public class Matricula implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,9 +33,9 @@ public class Matricula implements Serializable {
     @JoinColumn(name = "IdCentro", referencedColumnName = "IdCentro", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private CentroEsportivo centroEsportivo;
-    @JoinColumn(name = "idOferta", referencedColumnName = "idOferta", insertable = false, updatable = false)
+    @JoinColumn(name = "idTurma", referencedColumnName = "idTurma", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private AtividadeFisicaOfertada atividadeFisicaOfertada;
+    private Turma turma;
 
     public Matricula() {
     }
@@ -72,14 +72,14 @@ public class Matricula implements Serializable {
         this.centroEsportivo = centroEsportivo;
     }
 
-    public AtividadeFisicaOfertada getAtividadeFisicaOfertada() {
-        return atividadeFisicaOfertada;
+    public Turma getTurma() {
+        return turma;
     }
 
-    public void setAtividadeFisicaOfertada(AtividadeFisicaOfertada atividadeFisicaOfertada) {
-        this.atividadeFisicaOfertada = atividadeFisicaOfertada;
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -4,7 +4,6 @@
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <class>br.com.getfit.model.Usuario</class>
     <class>br.com.getfit.model.AtividadeFisica</class>
-    <class>br.com.getfit.model.AtividadeFisicaOfertada</class>
     <class>br.com.getfit.model.Avaliacao</class>
     <class>br.com.getfit.model.CentroEsportivo</class>
     <class>br.com.getfit.model.Matricula</class>
@@ -19,8 +18,8 @@
       <property name="javax.persistence.jdbc.password" value="root"/>
       <!-- Configuracoes especificas do Hibernate -->
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-      <!-- Usamos update para atualizar sempre o banco de acordo com nosso modelo -->
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <!-- Usamos update para atualizar sempre o banco de acordo com o modelo -->
+      <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
       <!--<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>-->

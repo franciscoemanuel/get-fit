@@ -3,6 +3,7 @@ package br.com.getfit.model;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,8 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "AtividadeFisica.findByNome", query = "SELECT a FROM AtividadeFisica a WHERE a.nome = :nome")})
 public class AtividadeFisica implements Serializable {
 
-    @OneToMany(mappedBy = "idAtividade")
-    private Collection<AtividadeFisicaOfertada> atividadeFisicaOfertadaCollection;
+    @OneToMany(mappedBy = "idTurma")
+    private Collection<Turma> turmaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -91,12 +92,13 @@ public class AtividadeFisica implements Serializable {
     }
 
     @XmlTransient
-    public Collection<AtividadeFisicaOfertada> getAtividadeFisicaOfertadaCollection() {
-        return atividadeFisicaOfertadaCollection;
+    public Collection<Turma> getTurmaCollection() {
+        return turmaCollection;
     }
 
-    public void setAtividadeFisicaOfertadaCollection(Collection<AtividadeFisicaOfertada> atividadeFisicaOfertadaCollection) {
-        this.atividadeFisicaOfertadaCollection = atividadeFisicaOfertadaCollection;
+    public void setTurmaCollection(Collection<Turma> turmaCollection) {
+        this.turmaCollection = turmaCollection;
     }
+    
     
 }

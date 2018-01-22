@@ -22,6 +22,10 @@ public class SessionUtil {
     public static String getNomeUsuario() {
         return ((Usuario) getSession().getAttribute("usuario")).getNome();
     }
+    
+     public static int getIdUsuario() {
+        return ((Usuario) getSession().getAttribute("usuario")).getIdUsuario();
+    }
 
     public static Usuario getUsuario() {
         return ((Usuario) getSession().getAttribute("usuario"));

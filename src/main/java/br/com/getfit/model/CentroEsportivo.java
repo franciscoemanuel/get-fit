@@ -1,17 +1,22 @@
 package br.com.getfit.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,6 +31,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "CentroEsportivo.findByDescricao", query = "SELECT c FROM CentroEsportivo c WHERE c.descricao = :descricao")
     , @NamedQuery(name = "CentroEsportivo.findByIdCentro", query = "SELECT c FROM CentroEsportivo c WHERE c.idCentro = :idCentro")})
 public class CentroEsportivo extends Usuario implements Serializable {
+
+    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
+    @ManyToOne
+    private Integer idUsuario;
+    @OneToMany(mappedBy = "idCentro")
+    private Collection<Turma> turmaCollection;
 
     private static final long serialVersionUID = 1L;
     @Size(max = 255)
@@ -93,6 +104,24 @@ public class CentroEsportivo extends Usuario implements Serializable {
     @Override
     public String toString() {
         return "br.com.getfit.model.CentroEsportivo[ idCentro=" + idCentro + " ]";
+    }
+
+    @Override
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    @XmlTransient
+    public Collection<Turma> getTurmaCollection() {
+        return turmaCollection;
+    }
+
+    public void setTurmaCollection(Collection<Turma> turmaCollection) {
+        this.turmaCollection = turmaCollection;
     }
     
 }

@@ -23,16 +23,16 @@ public class MatriculaPK implements Serializable {
     private int idCentro;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "idOferta")
-    private int idOferta;
+    @Column(name = "idTurma")
+    private int idTurma;
 
     public MatriculaPK() {
     }
 
-    public MatriculaPK(int idPessoa, int idCentro, int idOferta) {
+    public MatriculaPK(int idPessoa, int idCentro, int idTurma) {
         this.idPessoa = idPessoa;
         this.idCentro = idCentro;
-        this.idOferta = idOferta;
+        this.idTurma = idTurma;
     }
 
     public int getIdPessoa() {
@@ -51,12 +51,12 @@ public class MatriculaPK implements Serializable {
         this.idCentro = idCentro;
     }
 
-    public int getIdOferta() {
-        return idOferta;
+    public int getIdTurma() {
+        return idTurma;
     }
 
-    public void setIdOferta(int idOferta) {
-        this.idOferta = idOferta;
+    public void setIdTurma(int idTurma) {
+        this.idTurma = idTurma;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class MatriculaPK implements Serializable {
         int hash = 0;
         hash += (int) idPessoa;
         hash += (int) idCentro;
-        hash += (int) idOferta;
+        hash += (int) idTurma;
         return hash;
     }
 
@@ -81,7 +81,7 @@ public class MatriculaPK implements Serializable {
         if (this.idCentro != other.idCentro) {
             return false;
         }
-        if (this.idOferta != other.idOferta) {
+        if (this.idTurma != other.idTurma) {
             return false;
         }
         return true;
@@ -89,7 +89,7 @@ public class MatriculaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.getfit.model.MatriculaPK[ idPessoa=" + idPessoa + ", idCentro=" + idCentro + ", idOferta=" + idOferta + " ]";
+        return "br.com.getfit.model.MatriculaPK[ idPessoa=" + idPessoa + ", idCentro=" + idCentro + ", idTurma=" + idTurma + " ]";
     }
     
 }
