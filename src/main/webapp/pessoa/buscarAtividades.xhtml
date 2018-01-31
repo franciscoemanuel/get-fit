@@ -7,6 +7,67 @@
 
     <ui:define name="content">
         <h1 class="aw-page-title">Buscar atividades </h1>
+        
+        <style type="text/css">
+            .label {
+                font-weight: bold;
+            }
+            .panelInfo .ui-grid {
+                border: none;
+            }
+        </style>
+        
+        <h:form id="form">
+            <p:dataGrid var="turma" value="#{turmaController.turmasCadastradas}" columns="3" layout="grid"
+                        rows="12" paginator="true" id="turmas"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
+
+                <f:facet name="header">
+                    Turmas disponíveis
+                </f:facet>
+
+                <p:panel header="#{turma.idAtividade.nome}">
+                    <p:panelGrid columns="1" layout="grid" style="width:100%" class="panelInfo">
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Centro esportivo: " />
+                            <h:outputText value="#{turma.idCentro.nome}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Local: " />
+                            <h:outputText value="#{turma.idCentro.localizacao}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Instrutor: " />
+                            <h:outputText value="#{turma.instrutor}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Horário: " />
+                            <h:outputText value="#{turma.horario}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Preço: " />
+                            <h:outputText value="#{turma.preco}">
+                                 <f:convertNumber pattern="R$ ###,###.00" locale="pt_BR"/>
+                            </h:outputText>
+                        </p:row>
+                        
+                        <p:commandButton style="width: 100%" onclick="PF('matriculaDlg').show()" value="Me matricular" icon="fa fa-arrow-circle-right" />
+                    </p:panelGrid>
+                </p:panel>
+
+            </p:dataGrid>
+
+            <p:dialog header="Matricula" widgetVar="matriculaDlg" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:commandButton onclick="PF('matriculaDlg').hide()" value="Cancelar" icon="fa fa-times" />
+                <p:commandButton  value="Confirmar" icon="fa fa-check" />
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>

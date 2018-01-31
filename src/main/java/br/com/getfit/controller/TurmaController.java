@@ -26,6 +26,7 @@ public class TurmaController extends AbstractController {
     private int idAtividadeSelecionada;
     private BigDecimal mensalidade;
     private Turma turmaSelecionada = new Turma();
+    private Turma alunoMatriculado;
 
     public String getInstrutor() {
         return instrutor;
@@ -72,6 +73,14 @@ public class TurmaController extends AbstractController {
 
     public void setTurmaSelecionada(Turma turmaSelecionada) {
         this.turmaSelecionada = turmaSelecionada;
+    }
+
+    public int getIdAtividadeSelecionada() {
+        return idAtividadeSelecionada;
+    }
+
+    public void setIdAtividadeSelecionada(int idAtividadeSelecionada) {
+        this.idAtividadeSelecionada = idAtividadeSelecionada;
     }
 
     public void cadastrarTurma() {

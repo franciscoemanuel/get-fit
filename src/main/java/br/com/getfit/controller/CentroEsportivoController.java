@@ -1,7 +1,11 @@
 package br.com.getfit.controller;
 
+import br.com.getfit.dao.CentroEsportivoDAO;
+import br.com.getfit.model.CentroEsportivo;
 import br.com.getfit.model.Turma;
-import java.util.List;
+import br.com.getfit.util.SessionUtil;
+import java.util.ArrayList;
+import java.util.Collection;
 import javax.faces.bean.ManagedBean;
 
 /**
@@ -10,15 +14,22 @@ import javax.faces.bean.ManagedBean;
  */
 @ManagedBean
 public class CentroEsportivoController {
-
-    private List<Turma> turmas;
-
-    public List<Turma> getTurmas() {
-        return turmas;
+    
+    private CentroEsportivo getCentroEsportivoFromSession() {
+        int idUsuario = SessionUtil.getIdUsuario();
+        CentroEsportivoDAO centroEsportivoDAO = new CentroEsportivoDAO();
+        CentroEsportivo centroEsportivo = centroEsportivoDAO.buscarPorId(idUsuario);
+        return centroEsportivo;
     }
-
-    public void setTurmas(List<Turma> turmas) {
-        this.turmas = turmas;
+    
+    public Collection<Turma> getTurmas() {
+        Collection<Turma> turmasCentro = new ArrayList<Turma>();
+        try {
+            CentroEsportivo centroEsportivo = this.getCentroEsportivoFromSession();
+            turmasCentro = centroEsportivo.getTurmaCollection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return turmasCentro;
     }
-
 }
