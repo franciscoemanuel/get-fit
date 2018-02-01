@@ -6,7 +6,154 @@
                 template="/templates/Layout.xhtml">
 
     <ui:define name="content">
-        <h1 class="aw-page-title">Mural</h1>
+
+        <style>
+            .actionsCol {
+                width: 10%;
+                text-align: center;
+            }
+            .actionsCol button {
+                margin-left: 0.2em;
+            }
+            .numberCol{
+                width: 10%; 
+                text-align: right
+            }
+            #cadastrarNovaTurma {
+                margin-bottom: 1em;
+            }
+        </style>
+        <p:growl id="messages" showDetail="true" />  
+
+        <h1 class="aw-page-title">Turmas</h1>
+
+        <h:form id="cadastrarNovaTurma">
+            <p:commandButton icon="fa fa-plus-circle" value="Nova turma" onclick="PF('dlgCadastrarNovaTurma').show();" type="button" id="btn-cadastrarNovaTurma" />
+        </h:form>
+
+        <p:dataTable id="tabelaTurmas" emptyMessage="Nenhuma turma encontrada" var="turma" value="#{centroEsportivoController.getTurmas()}" reflow="true" rows="10" paginator="true">
+
+            <p:column headerText="Ações" class="actionsCol">
+                <h:form>
+                    <p:commandButton update="pgAlunos" id="btn-listarMatriculados" icon="fa fa-fw fa-users" oncomplete="PF('dlgAlunosMatriculados').show();">
+                        <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                    </p:commandButton>
+                    <p:tooltip value="Ver participantes matriculados" for="btn-listarMatriculados" position="right" />
+
+                    <p:commandButton update="formEditarTurma" id="btn-editarTurma" icon="fa fa-fw fa-edit" oncomplete="PF('dlgEditarTurma').show();">
+                        <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                    </p:commandButton>
+                    <p:tooltip value="Editar Turma" for="btn-editarTurma" position="right" />
+
+                    <p:commandButton id="btn-excluirTurma" icon="fa fa-fw fa-remove" oncomplete="PF('dlgExclusao').show()">
+                        <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                    </p:commandButton>
+
+                    <p:tooltip value="Excluir Turma" for="btn-excluirTurma" position="right" />
+                </h:form>
+            </p:column>
+
+            <p:column headerText="Atividade praticada: ">
+                <h:outputText value="#{turma.idAtividade.nome}" />
+            </p:column>
+
+            <p:column headerText="Descrição do horário: ">
+                <h:outputText value="#{turma.horario}" />
+            </p:column>
+
+            <p:column headerText="Instrutor: ">
+                <h:outputText value="#{turma.instrutor}" />
+            </p:column>
+
+            <p:column headerText="Valor da mensalidade:" class="numberCol">
+                <h:outputText value="#{turma.preco}">
+                    <f:convertNumber pattern="R$ ###,###.00" locale="pt_BR"/>
+                </h:outputText>
+            </p:column>
+
+        </p:dataTable>
+
+
+        <!-- Dialogs !-->    
+
+        <!-- Dialog de remover turma !-->
+        <p:dialog widgetVar="dlgExclusao" responsive="true" showEffect="fade"  hideEffect="fade" header="Remover turma" resizable="false" class="dlgConfirmacao">
+            <h:form>
+                <p:commandButton oncomplete="PF('dlgExclusao').hide()" update="tabelaTurmas" value="Sim" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" actionListener="#{turmaController.removerTurma()}"/>
+                <p:commandButton onclick="PF('dlgExclusao').hide()" value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </h:form>
+        </p:dialog>
+        
+        
+        <!-- Dialog de cadastrar turma !-->
+        <p:dialog responsive="true" header="Cadastro de nova turma" widgetVar="dlgCadastrarNovaTurma" resizable="false">
+            <h:form id="formNovaTurma">
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:outputLabel for="atividade" value="Atividade: " />
+                    <p:selectOneMenu filter="true" filterMatchMode="startsWith" required="true" id="atividade" value="#{turmaController.atividadeSelecionada}">
+                        <f:selectItem itemLabel="Selecione uma atividade"/>
+                        <f:selectItems value="#{atividadeFisicaController.listaAtividadesFisicas}" var="atividade" itemLabel="#{atividade.nome}" itemValue="#{atividade.idAtividade}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="instrutor" value="Nome do instrutor: "/>
+                    <p:inputText size="100" id="instrutor" required="true" placeholder="Fulano da Silva" value="#{turmaController.instrutor}"/>
+
+                    <h:outputLabel for="horario" value="Descrição do horário: "/>
+                    <p:inputText size="100" id="horario" required="true" placeholder="Quarta e Sexta, das 8h às 10h" value="#{turmaController.horario}"/>
+
+                    <h:outputLabel for="mensalidade" value="Valor da mensalidade: "/>
+                    <p:inputNumber maxValue="999.99" minValue="0" symbol="R$ " id="mensalidade" required="true" decimalSeparator="," thousandSeparator="." value="#{turmaController.mensalidade}"/>
+
+                </h:panelGrid>
+
+                <div align="right" style="margin-top: 10px">
+                    <p:commandButton value="Cadastrar" action="${turmaController.cadastrarTurma()}" update="formNovaTurma, tabelaTurmas" icon="ui-icon-check" validateClient="true" oncomplete="PF('dlgCadastrarNovaTurma').hide()"/>
+                </div>
+
+                <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
+            </h:form>
+        </p:dialog>
+        
+        <!-- Dialog de editar turma !-->
+        <p:dialog responsive="true" header="Editar turma" widgetVar="dlgEditarTurma" resizable="false">
+            <h:form id="formEditarTurma">
+
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <p:outputLabel for="atividadeEditada" value="Atividade: " />
+                    <p:selectOneMenu filter="true" filterMatchMode="startsWith" required="true" id="atividadeEditada" value="#{empty turmaController.turmaSelecionada ?  '' : turmaController.turmaSelecionada.idAtividade.idAtividade}">
+                        <f:selectItems value="#{atividadeFisicaController.listaAtividadesFisicas}" var="atividade" itemLabel="#{atividade.nome}" itemValue="#{atividade.idAtividade}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="instrutorEditado" value="Nome do instrutor: "/>
+                    <p:inputText size="100" id="instrutorEditado" required="true" placeholder="Fulano da Silva" value="#{turmaController.turmaSelecionada.instrutor}"/>
+
+                    <h:outputLabel for="horarioEditado" value="Descrição do horário: "/>
+                    <p:inputText size="100" id="horarioEditado" required="true" placeholder="Quarta e Sexta, das 8h às 10h" value="#{turmaController.turmaSelecionada.horario}"/>
+
+                    <h:outputLabel for="mensalidadeEditada" value="Valor da mensalidade: "/>
+                    <p:inputNumber maxValue="999.99" minValue="0" symbol="R$ " id="mensalidadeEditada" required="true" decimalSeparator="," thousandSeparator="." value="#{turmaController.turmaSelecionada.preco}"/>
+
+                </h:panelGrid>
+
+                <div align="right" style="margin-top: 10px">
+                    <p:commandButton update="tabelaTurmas" value="Editar" action="#{turmaController.editarTurma()}" icon="ui-icon-check" validateClient="true" oncomplete="PF('dlgEditarTurma').hide()"/>
+                </div> 
+
+                <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
+            </h:form>
+        </p:dialog>
+        
+        <!-- Dialog de alunos matriculados!-->
+        <p:dialog responsive="true" header="Participantes cadastrados" widgetVar="dlgAlunosMatriculados" id="alunosMatriculados" resizable="false">
+            <h:panelGroup id="pgAlunos">
+                <p:dataList emptyMessage="Nenhum aluno matriculado" value="#{turmaController.turmaSelecionada.usuarioCollection}" var="usuario" type="ordered" paginator="true" rows="10" styleClass="paginated">
+                    <h:outputText value="#{usuario.nome} - #{usuario.email}" style="display:inline-block"/>
+                </p:dataList>
+            </h:panelGroup>
+        </p:dialog>
     </ui:define>
 
 </ui:composition>

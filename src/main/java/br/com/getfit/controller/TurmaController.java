@@ -29,7 +29,8 @@ public class TurmaController extends AbstractController {
     private int idAtividadeSelecionada;
     private BigDecimal mensalidade;
     private Turma turmaSelecionada = new Turma();
-
+    private Usuario alunoSelecionado;
+    
     public String getInstrutor() {
         return instrutor;
     }
@@ -83,6 +84,14 @@ public class TurmaController extends AbstractController {
 
     public void setIdAtividadeSelecionada(int idAtividadeSelecionada) {
         this.idAtividadeSelecionada = idAtividadeSelecionada;
+    }
+
+    public Usuario getAlunoSelecionado() {
+        return alunoSelecionado;
+    }
+
+    public void setAlunoSelecionado(Usuario alunoSelecionado) {
+        this.alunoSelecionado = alunoSelecionado;
     }
 
     public void cadastrarTurma() {
@@ -156,6 +165,7 @@ public class TurmaController extends AbstractController {
            Usuario usuario = usuarioDAO.buscarPorId(idUsuario);
            turmaSelecionada.getUsuarioCollection().add(usuario);
            turmaDAO.atualizar(turmaSelecionada);
+            sendInfoMessage("Matricula efetuada com sucesso!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -174,11 +184,27 @@ public class TurmaController extends AbstractController {
         }
     }
     
+    public void cancelarMatriculaAluno() {
+        TurmaDAO turmaDAO = new TurmaDAO();
+        try {
+            turmaSelecionada.getUsuarioCollection().remove(alunoSelecionado);
+            turmaDAO.atualizar(turmaSelecionada);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public Collection<Usuario> alunosTurma() {
         int idTurma = this.turmaSelecionada.getIdTurma();
         TurmaDAO turmaDAO = new TurmaDAO();
         Turma turma = turmaDAO.buscarPorId(idTurma);
         return turma.getUsuarioCollection();
     }
-
+    
+        
+    public boolean usuarioEstaMatriculado(Turma turma) {
+        Usuario usuario = SessionUtil.getUsuario();
+        return turma.getUsuarioCollection().contains(usuario);
+    }
+    
 }

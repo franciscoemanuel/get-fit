@@ -6,7 +6,62 @@
                 template="/templates/Layout.xhtml">
 
     <ui:define name="content">
-        <h1 class="aw-page-title">Alunos matriculados</h1>
+        <style>
+            .gridAlunos td {
+                border: none !important;
+            }
+            .gridPanel td {
+                border: none !important;
+            }
+        </style>
+        <h:form>
+            <p:dataTable emptyMessage="Nenhum aluno matriculado" var="aluno" value="#{centroEsportivoController.alunos}" id="tabelaAlunosMatriculados">
+                <f:facet name="header">
+                    Alunos Matriculados
+                </f:facet>
+                <p:column style="width:16px">
+                    <p:rowToggler />
+                </p:column>
+                <p:column headerText="Id">
+                    <h:outputText value="#{aluno.idUsuario}" />
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{aluno.nome}" />
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{aluno.email}" />
+                </p:column>
+
+                <p:rowExpansion>
+                    <p:repeat value="#{centroEsportivoController.getTurmasAluno(aluno)}" var="turma">
+                        <h:panelGrid columns="2" class="gridPanel">
+                            <p:outputPanel>
+                                <h:panelGrid columns="2" class="gridAlunos">
+                                    <h:outputText value="Atividade praticada: " />
+                                    <h:outputText value="#{turma.idAtividade.nome}" style="font-weight: bold"/>
+
+                                    <h:outputText value="Horário: " />
+                                    <h:outputText value="#{turma.horario}" style="font-weight: bold"/>
+
+                                    <h:outputText value="Instrutor: " />
+                                    <h:outputText value="#{turma.instrutor}" style="font-weight: bold"/>
+
+                                    <p:commandButton value="Cancelar matrícula" id="btn-cancelarMatricula" icon="fa fa-fw fa-remove" oncomplete="PF('cancelarMatriculaDlg').show()">
+                                        <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                                        <f:setPropertyActionListener value="#{aluno}" target="#{turmaController.alunoSelecionado}" />
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </p:outputPanel>
+                        </h:panelGrid>
+                        <hr />
+                    </p:repeat>
+                </p:rowExpansion>
+            </p:dataTable>
+            <p:dialog header="Cancelar matrícula" widgetVar="cancelarMatriculaDlg" showEffect="fade" hideEffect="fade" resizable="false" class="dlgConfirmacao">
+                <p:commandButton onclick="PF('cancelarMatriculaDlg').hide()" value="Voltar" icon="fa fa-times" />
+                <p:commandButton update="tabelaAlunosMatriculados" actionListener="#{turmaController.cancelarMatriculaAluno()}" oncomplete="PF('cancelarMatriculaDlg').hide()" value="Confirmar" icon="fa fa-check" />
+            </p:dialog>
+        </h:form>
     </ui:define>
 
 </ui:composition>

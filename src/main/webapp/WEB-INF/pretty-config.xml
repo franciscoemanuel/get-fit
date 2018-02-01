@@ -28,9 +28,9 @@
         <view-id value="/centroEsportivo/alunosMatriculados.xhtml" />
     </url-mapping>
     
-    <url-mapping id="turmas">
-        <pattern value="/centroEsportivo/turmas" />
-        <view-id value="/centroEsportivo/turmas.xhtml" />
+    <url-mapping id="perfil">
+        <pattern value="/centroEsportivo/perfil" />
+        <view-id value="/centroEsportivo/meuPerfil.xhtml" />
     </url-mapping>
     
         
@@ -41,9 +41,9 @@
         <view-id value="/pessoa/index.xhtml" />
     </url-mapping>
         
-    <url-mapping id="buscarAtividades">
-        <pattern value="/pessoa/buscarAtividades" />
-        <view-id value="/pessoa/buscarAtividades.xhtml" />
+    <url-mapping id="perfil">
+        <pattern value="/pessoa/perfil" />
+        <view-id value="/pessoa/meuPerfil.xhtml" />
     </url-mapping>
     
     <url-mapping id="minhasAtividades">

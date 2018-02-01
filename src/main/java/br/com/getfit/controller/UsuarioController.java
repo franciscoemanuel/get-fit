@@ -5,6 +5,7 @@ import br.com.getfit.dao.PessoaDAO;
 import br.com.getfit.dao.UsuarioDAO;
 import br.com.getfit.model.CentroEsportivo;
 import br.com.getfit.model.Pessoa;
+import br.com.getfit.model.Turma;
 import br.com.getfit.model.Usuario;
 import br.com.getfit.util.SessionUtil;
 import javax.faces.bean.ManagedBean;
@@ -22,6 +23,7 @@ public class UsuarioController {
     private String tipoUsuario;
     private Pessoa pessoaEditada;
     private CentroEsportivo centroEsportivoEditado;
+    private String novaSenha;
 
     public Pessoa getPessoaEditada() {
         return pessoaEditada;
@@ -46,6 +48,14 @@ public class UsuarioController {
     public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
     
     public void carregarUsuarioEditado() {
         try {
@@ -55,10 +65,8 @@ public class UsuarioController {
             CentroEsportivoDAO centroEsportivoDAO = new CentroEsportivoDAO();
             if (tipoUsuario.equals("pessoa")) {
                 this.pessoaEditada = pessoaDAO.buscarPorId(idUsuario);
-                this.pessoaEditada.setSenha("");
             } else {
                 this.centroEsportivoEditado = centroEsportivoDAO.buscarPorId(idUsuario);
-                this.centroEsportivoEditado.setSenha("");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -69,8 +77,8 @@ public class UsuarioController {
         try {
             UsuarioDAO usuarioDAO = new UsuarioDAO();
             Usuario usuario = tipoUsuario.equals("pessoa") ? pessoaEditada : centroEsportivoEditado;
-            if (!usuario.getSenha().equals("")) {
-                String senhaCriptografada = BCrypt.hashpw(usuario.getSenha(), BCrypt.gensalt());
+            if (novaSenha != null && !novaSenha.equals("")) {
+                String senhaCriptografada = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
                 usuario.setSenha(senhaCriptografada);
             }
             usuarioDAO.atualizar(usuario);

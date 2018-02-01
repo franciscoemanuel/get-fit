@@ -59,7 +59,7 @@
         
         <p:dialog header="Cancelar matrícula" widgetVar="cancelarMatriculaDlg" showEffect="fade" hideEffect="fade" resizable="false" class="dlgConfirmacao">
             <p:commandButton onclick="PF('cancelarMatriculaDlg').hide()" value="Voltar" icon="fa fa-times" />
-            <p:commandButton update="pgTurmas" actionListener="#{turmaController.cancelarMatricula}" oncomplete="PF('cancelarMatriculaDlg').hide()" value="Confirmar" icon="fa fa-check" />
+            <p:commandButton update="pgTurmas" actionListener="#{turmaController.cancelarMatriculaAluno}" oncomplete="PF('cancelarMatriculaDlg').hide()" value="Confirmar" icon="fa fa-check" />
         </p:dialog>
     </ui:define>
 

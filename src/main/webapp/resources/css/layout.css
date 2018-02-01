@@ -65,3 +65,8 @@
 .dlgConfirmacao .ui-button {
     margin-right: 2em;
 }
+
+ .ui-growl {
+    right: 20px !important;
+    top: 4em !important;
+}

@@ -6,10 +6,10 @@
         <ui:fragment rendered="#{autenticacaoController.usuario.tipoUsuario == 'pessoa'}">
             <ul>
                 <li>
-                    <a href="/pessoa"><i class="fa fa-user"></i>Meu Perfil</a>
+                    <a href="/pessoa/perfil"><i class="fa fa-user"></i>Meu Perfil</a>
                 </li>
                 <li>
-                    <a href="/pessoa/buscarAtividades"><i class="fa  fa-fw  fa-search"></i>Buscar atividades</a>
+                    <a href="/pessoa/"><i class="fa  fa-fw  fa-search"></i>Buscar atividades</a>
                 </li>
                 <li>
                     <a href="/pessoa/minhasAtividades"><i class="fa  fa-fw  fa-file-text"></i>Minhas atividades</a>
@@ -26,10 +26,10 @@
         <ui:fragment rendered="#{autenticacaoController.usuario.tipoUsuario == 'centroEsportivo'}">
             <ul>
                 <li>
-                    <a href="/centroEsportivo/"><i class="fa fa-newspaper-o"></i>Mural</a>
+                    <a href="/centroEsportivo/perfil"><i class="fa fa-user"></i>Meu perfil</a>
                 </li>
                 <li>
-                    <a href="/centroEsportivo/turmas"><i class="fa fa-users"></i>Turmas</a>
+                    <a href="/centroEsportivo/"><i class="fa fa-users"></i>Turmas</a>
                 </li>
                 <li>
                     <a href="/centroEsportivo/alunosMatriculados"><i class="fa fa-id-card "></i>Alunos matriculados</a>

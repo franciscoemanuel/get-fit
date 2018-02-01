@@ -6,51 +6,70 @@
                 template="/templates/Layout.xhtml">
 
     <ui:define name="content">
+        <h1 class="aw-page-title">Buscar atividades </h1>
+        
         <style type="text/css">
-            .editarPanel {
-                margin-top: 5em;
+            .label {
+                font-weight: bold;
+            }
+            .panelInfo .ui-grid {
+                border: none;
             }
         </style>
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{usuarioController.carregarUsuarioEditado()}" />
-        </f:metadata>
-        <h:form>
-            <p:panel id="panel" class="ui-lg-8 ui-md-12 centered editarPanel" header="Editar perfil">
-                <p:growl autoUpdate="true"/>
-                
-                <p:focus context="panel"/>
-                
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="nomePessoa" value="Nome: "/>
-                    <p:inputText size="100" id="nomePessoa" required="true" placeholder="Fulano da Silva" value="#{usuarioController.pessoaEditada.nome}"/>
+        <p:growl autoUpdate="true"/>
 
-                    <p:outputLabel for="emailPessoa" value="Email" />
-                    <p:inputText size="100" id="emailPessoa" required="true" placeholder="exemplo@exemplo.com" value="#{usuarioController.pessoaEditada.email}"/>
+        <h:form id="form">
+            <p:dataGrid var="turma" emptyMessage="Nenhuma atividade encontrada" value="#{turmaController.turmasCadastradas}" columns="3" layout="grid"
+                        rows="12" paginator="true" id="turmas"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="6,12,16">
 
-                    <p:outputLabel for="senhaPessoa" value="Senha" />
-                    <p:password id="senhaPessoa" match="senhaConfirmacaoPessoa" validatorMessage="As senhas devem ser iguais" value="#{usuarioController.pessoaEditada.senha}" maxlength="12"/>
+                <f:facet name="header">
+                    Turmas disponíveis
+                </f:facet>
 
-                    <p:outputLabel for="senhaConfirmacaoPessoa" value="Redigite a senha" />
-                    <p:password id="senhaConfirmacaoPessoa" required="true" maxlength="12"/>
-                    
-                    <h:outputLabel for="sexoPessoa" value="Sexo: "/>
-                    <p:selectOneRadio id="sexoPessoa" value="#{usuarioController.pessoaEditada.sexo}">
-                        <f:selectItem itemLabel="Masculino" itemValue="m"/>
-                        <f:selectItem itemLabel="Feminino" itemValue="f" />
-                        <f:selectItem itemLabel="Outro" itemValue="o" />
-                    </p:selectOneRadio>
+                <p:panel header="#{turma.idAtividade.nome}">
+                    <p:panelGrid columns="1" layout="grid" style="width:100%" class="panelInfo" id="panelAtividades">
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Centro esportivo: " />
+                            <h:outputText value="#{turma.idCentro.nome}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Local: " />
+                            <h:outputText value="#{turma.idCentro.localizacao}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Instrutor: " />
+                            <h:outputText value="#{turma.instrutor}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Horário: " />
+                            <h:outputText value="#{turma.horario}" />
+                        </p:row>
+                        
+                        <p:row>
+                            <h:outputLabel class="label" value="Preço: " />
+                            <h:outputText value="#{turma.preco}">
+                                 <f:convertNumber pattern="R$ ###,###.00" locale="pt_BR"/>
+                            </h:outputText>
+                        </p:row>
+                        
+                        <p:commandButton class="ui-priority-primary" style="width: 100%" oncomplete="PF('matriculaDlg').show()" rendered="#{not turmaController.usuarioEstaMatriculado(turma)}" value="Me matricular" icon="fa fa-arrow-circle-right">
+                            <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                        </p:commandButton>
+                    </p:panelGrid>
+                </p:panel>
 
-                    <p:outputLabel for="bio" value="Bio: " />
-                    <p:inputText id="bio" required="true" value="#{usuarioController.pessoaEditada.bio}" placeholder="Descrição sobre você" />
+            </p:dataGrid>
 
-                </h:panelGrid>
-
-                <div align="right" style="margin-top: 10px">
-                    <p:commandButton value="Cadastrar" action="${usuarioController.editarUsuario()}" update="panel" icon="ui-icon-check" validateClient="true" onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"/>
-                </div>
-            </p:panel>
-
-            <p:ajaxExceptionHandler type="java.sql.SQLException" onexception="PF('messages').show();" />
+            <p:dialog header="Matricula" widgetVar="matriculaDlg" showEffect="fade" hideEffect="fade" resizable="false" class="dlgConfirmacao">
+                <p:commandButton onclick="PF('matriculaDlg').hide()" value="Cancelar" icon="fa fa-times" />
+                <p:commandButton update="form" oncomplete="PF('matriculaDlg').hide()" actionListener="#{turmaController.matricularAluno}"  value="Confirmar" icon="fa fa-check" />
+            </p:dialog>
         </h:form>
     </ui:define>
 

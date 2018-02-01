@@ -32,6 +32,4 @@ public class PessoaController {
         Usuario usuario = getPessoaFromSession();
         return usuario.getTurmasCentroCollection();
     }
-    
-    
 }
