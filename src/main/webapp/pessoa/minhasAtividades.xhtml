@@ -6,6 +6,17 @@
                 template="/templates/Layout.xhtml">
 
     <ui:define name="content" id="turmas-container">
+        
+        <style>
+            .nenhumaTurmaEncontrada {
+                color: red;
+            }
+            
+            .nenhumaTurmaEncontrada .ui-icon {
+                display: inline;
+            }
+        </style>
+        
         <h1 class="aw-page-title">Atividades que estou matriculado</h1>
         
         <h:panelGroup id="pgTurmas">
@@ -40,6 +51,11 @@
             </p:repeat>
         </h:panelGroup>
         
+        <h:panelGroup rendered="#{empty pessoaController.turmasUsuario}" class="nenhumaTurmaEncontrada">
+             <p:outputPanel>
+                 <h:outputLabel>Nenhuma matrícula encontrada <span class="ui-icon fa fa-times" style="" /> </h:outputLabel>
+             </p:outputPanel>
+        </h:panelGroup>
         
         <p:dialog header="Cancelar matrícula" widgetVar="cancelarMatriculaDlg" showEffect="fade" hideEffect="fade" resizable="false" class="dlgConfirmacao">
             <p:commandButton onclick="PF('cancelarMatriculaDlg').hide()" value="Voltar" icon="fa fa-times" />

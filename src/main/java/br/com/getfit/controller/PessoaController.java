@@ -27,10 +27,11 @@ public class PessoaController {
         }
         return pessoa;
     }
-    
+
     public Collection<Turma> getTurmasUsuario() {
         Usuario usuario = getPessoaFromSession();
         return usuario.getTurmasCentroCollection();
     }
+    
     
 }
