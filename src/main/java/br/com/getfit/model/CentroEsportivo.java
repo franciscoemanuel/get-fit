@@ -3,6 +3,7 @@ package br.com.getfit.model;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,11 +33,16 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "CentroEsportivo.findByIdCentro", query = "SELECT c FROM CentroEsportivo c WHERE c.idCentro = :idCentro")})
 public class CentroEsportivo extends Usuario implements Serializable {
 
+    @OneToMany(mappedBy = "idCentro")
+    private Collection<Post> postCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCentro")
+    private Collection<Avaliacao> avaliacaoCollection;
+
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne
     private Integer idUsuario;
     @OneToMany(mappedBy = "idCentro")
-    private Collection<Turma> turmaCollection;
+    private Collection<Turma> turmasCentroCollection;
 
     private static final long serialVersionUID = 1L;
     @Size(max = 255)
@@ -116,12 +122,30 @@ public class CentroEsportivo extends Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Turma> getTurmaCollection() {
-        return turmaCollection;
+    public Collection<Turma> getTurmasCentroCollection() {
+        return turmasCentroCollection;
     }
 
-    public void setTurmaCollection(Collection<Turma> turmaCollection) {
-        this.turmaCollection = turmaCollection;
+    public void setTurmasCentroCollection(Collection<Turma> turmasCentroCollection) {
+        this.turmasCentroCollection = turmasCentroCollection;
+    }
+
+    @XmlTransient
+    public Collection<Post> getPostCollection() {
+        return postCollection;
+    }
+
+    public void setPostCollection(Collection<Post> postCollection) {
+        this.postCollection = postCollection;
+    }
+
+    @XmlTransient
+    public Collection<Avaliacao> getAvaliacaoCollection() {
+        return avaliacaoCollection;
+    }
+
+    public void setAvaliacaoCollection(Collection<Avaliacao> avaliacaoCollection) {
+        this.avaliacaoCollection = avaliacaoCollection;
     }
     
 }

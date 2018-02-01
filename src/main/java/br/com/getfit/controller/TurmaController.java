@@ -3,12 +3,15 @@ package br.com.getfit.controller;
 import br.com.getfit.dao.AtividadeFisicaDAO;
 import br.com.getfit.dao.CentroEsportivoDAO;
 import br.com.getfit.dao.TurmaDAO;
+import br.com.getfit.dao.UsuarioDAO;
 import br.com.getfit.model.AtividadeFisica;
 import br.com.getfit.model.CentroEsportivo;
 import br.com.getfit.model.Turma;
+import br.com.getfit.model.Usuario;
 import br.com.getfit.util.SessionUtil;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,7 +29,6 @@ public class TurmaController extends AbstractController {
     private int idAtividadeSelecionada;
     private BigDecimal mensalidade;
     private Turma turmaSelecionada = new Turma();
-    private Turma alunoMatriculado;
 
     public String getInstrutor() {
         return instrutor;
@@ -144,6 +146,39 @@ public class TurmaController extends AbstractController {
             e.printStackTrace();
             sendErrorMessage("Não foi possível editar a turma");
         }
+    }
+    
+    public void matricularAluno() {
+        int idUsuario = SessionUtil.getIdUsuario();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        TurmaDAO turmaDAO = new TurmaDAO();
+        try {
+           Usuario usuario = usuarioDAO.buscarPorId(idUsuario);
+           turmaSelecionada.getUsuarioCollection().add(usuario);
+           turmaDAO.atualizar(turmaSelecionada);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void cancelarMatricula() {
+        int idUsuario = SessionUtil.getIdUsuario();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        TurmaDAO turmaDAO = new TurmaDAO();
+        try {
+           Usuario usuario = usuarioDAO.buscarPorId(idUsuario);
+           turmaSelecionada.getUsuarioCollection().remove(usuario);
+           turmaDAO.atualizar(turmaSelecionada);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public Collection<Usuario> alunosTurma() {
+        int idTurma = this.turmaSelecionada.getIdTurma();
+        TurmaDAO turmaDAO = new TurmaDAO();
+        Turma turma = turmaDAO.buscarPorId(idTurma);
+        return turma.getUsuarioCollection();
     }
 
 }

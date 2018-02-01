@@ -7,6 +7,7 @@ package br.com.getfit.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,6 +25,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -37,6 +41,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Turma.findByPreco", query = "SELECT t FROM Turma t WHERE t.preco = :preco")
     , @NamedQuery(name = "Turma.findByIdTurma", query = "SELECT t FROM Turma t WHERE t.idTurma = :idTurma")})
 public class Turma implements Serializable {
+
+    @JoinTable(name = "pessoa_turmas", joinColumns = {
+        @JoinColumn(name = "idTurma", referencedColumnName = "idTurma")}, inverseJoinColumns = {
+        @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", table = "usuario")})
+    @ManyToMany
+    private Collection<Usuario> usuarioCollection;
 
     private static final long serialVersionUID = 1L;
     @Size(max = 255)
@@ -139,5 +149,15 @@ public class Turma implements Serializable {
     public String toString() {
         return "br.com.getfit.model.Turma[ idTurma=" + idTurma + " ]";
     }
+
+    @XmlTransient
+    public Collection<Usuario> getUsuarioCollection() {
+        return usuarioCollection;
+    }
+
+    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
+        this.usuarioCollection = usuarioCollection;
+    }
+    
 
 }

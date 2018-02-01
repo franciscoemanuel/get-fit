@@ -5,8 +5,46 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/Layout.xhtml">
 
-    <ui:define name="content">
-        <h1 class="aw-page-title">atividades que o usuário pratica</h1>
+    <ui:define name="content" id="turmas-container">
+        <h1 class="aw-page-title">Atividades que estou matriculado</h1>
+        
+        <h:panelGroup id="pgTurmas">
+            <p:repeat value="#{pessoaController.turmasUsuario}" var="turma">
+                <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                    <p:outputPanel>
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputText value="Atividade praticada: " />
+                            <h:outputText value="#{turma.idAtividade.nome}" style="font-weight: bold"/>
+
+                            <h:outputText value="Centro esportivo" />
+                            <h:outputText value="#{turma.idCentro.nome}" style="font-weight: bold"/>
+
+                            <h:outputText value="Horário: " />
+                            <h:outputText value="#{turma.horario}" style="font-weight: bold"/>
+
+                            <h:outputText value="Mensalidade: " />
+                            <h:outputText value="#{turma.preco}" style="font-weight: bold">
+                                <f:convertNumber pattern="R$ ###,###.00" locale="pt_BR"/>
+                            </h:outputText>
+
+                            <h:outputText value="Local" />
+                            <h:outputText value="#{turma.idCentro.localizacao}" style="font-weight: bold"/>
+
+                            <p:commandButton value="Cancelar matrícula" id="btn-cancelarMatricula" icon="fa fa-fw fa-remove" oncomplete="PF('cancelarMatriculaDlg').show()">
+                                <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:outputPanel>
+                </h:panelGrid>
+                <hr />
+            </p:repeat>
+        </h:panelGroup>
+        
+        
+        <p:dialog header="Cancelar matrícula" widgetVar="cancelarMatriculaDlg" showEffect="fade" hideEffect="fade" resizable="false" class="dlgConfirmacao">
+            <p:commandButton onclick="PF('cancelarMatriculaDlg').hide()" value="Voltar" icon="fa fa-times" />
+            <p:commandButton update="pgTurmas" actionListener="#{turmaController.cancelarMatricula}" oncomplete="PF('cancelarMatriculaDlg').hide()" value="Confirmar" icon="fa fa-check" />
+        </p:dialog>
     </ui:define>
 
 </ui:composition>

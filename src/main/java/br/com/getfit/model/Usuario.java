@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,6 +39,9 @@ import org.hibernate.validator.constraints.Email;
     , @NamedQuery(name = "Usuario.findByTipoUsuario", query = "SELECT u FROM Usuario u WHERE u.tipoUsuario = :tipoUsuario")
     , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")})
 public abstract class Usuario implements Serializable {
+
+    @ManyToMany(mappedBy = "usuarioCollection")
+    private Collection<Turma> turmaCollection;
 
     @NotNull
     @Size(min = 3, max = 255, message = "O nome deve ter entre 3 a 255 caracteres")
@@ -155,6 +159,15 @@ public abstract class Usuario implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @XmlTransient
+    public Collection<Turma> getTurmasCentroCollection() {
+        return turmaCollection;
+    }
+
+    public void setTurmasCentroCollection(Collection<Turma> turmaCollection) {
+        this.turmaCollection = turmaCollection;
     }
     
 }

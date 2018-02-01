@@ -57,15 +57,17 @@
                             </h:outputText>
                         </p:row>
                         
-                        <p:commandButton style="width: 100%" onclick="PF('matriculaDlg').show()" value="Me matricular" icon="fa fa-arrow-circle-right" />
+                        <p:commandButton class="ui-priority-primary" style="width: 100%" oncomplete="PF('matriculaDlg').show()" value="Me matricular" icon="fa fa-arrow-circle-right">
+                            <f:setPropertyActionListener value="#{turma}" target="#{turmaController.turmaSelecionada}" />
+                        </p:commandButton>
                     </p:panelGrid>
                 </p:panel>
 
             </p:dataGrid>
 
-            <p:dialog header="Matricula" widgetVar="matriculaDlg" showEffect="fade" hideEffect="fade" resizable="false">
+            <p:dialog header="Matricula" widgetVar="matriculaDlg" showEffect="fade" hideEffect="fade" resizable="false" class="dlgConfirmacao">
                 <p:commandButton onclick="PF('matriculaDlg').hide()" value="Cancelar" icon="fa fa-times" />
-                <p:commandButton  value="Confirmar" icon="fa fa-check" />
+                <p:commandButton oncomplete="PF('matriculaDlg').hide()" actionListener="#{turmaController.matricularAluno}"  value="Confirmar" icon="fa fa-check" />
             </p:dialog>
         </h:form>
     </ui:define>
